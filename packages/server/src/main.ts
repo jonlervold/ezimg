@@ -5,23 +5,9 @@
 
 import * as express from 'express';
 import * as cors from "cors";
+import * as database from "./services/database"
 
 const app = express();
-
-let database = {
-  experiencedthings: {
-    fileName: "experiencedthings",
-    extension: "jpg",
-    description: "text saying you have just experienced things",
-    dateAdded: "04/11/2022",
-  },
-  literalspongebob: {
-    fileName: "literalspongebob",
-    extension: "jpg",
-    description: "really bad spongebob costume made of actual sponges",
-    dateAdded: "04/11/2022",
-  },
-};
 
 app.use(cors());
 
@@ -34,14 +20,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/database", (req, res) => {
-  res.send(database);
+  res.send(database.get());
 });
 
 app.put("/database", (req, res) => {
   res.send("Received PUT request in /database");
   // needs to actually update the database here... HOW?
   console.log(req.body); // ??
-  database = req.body;
+  database.set(req.body);
 });
 
 

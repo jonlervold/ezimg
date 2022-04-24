@@ -1,11 +1,11 @@
 import "./App.css";
-import { stateTable } from "./stateTable";
 import { useEffect, useState } from "react";
 import PaginationNavigation from "./components/PaginationNavigation";
 import axios from "axios";
 import FileDisplay from "./components/FileDisplay";
 import { loadingObject } from "./util/loadingObject";
 import AddAFile from "./components/AddAFile";
+import { stateTable } from "./stateTable";
 
 function App() {
   const [stateData, setStateData] = useState(stateTable);

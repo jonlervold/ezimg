@@ -1,13 +1,15 @@
 import React from 'react';
+import { stateData } from '../stateTable';
+import { database } from '../util/databaseInterface';
 import handleDescriptionChange from '../util/handleDescriptionChange';
 import handleNewFilenameChange from '../util/handleNewFilenameChange';
 import handleSelectedFileChange from '../util/handleSelectedFileChange';
 import handleUploadClick from '../util/handleUploadClick';
 
 type Props = {
-  stateData: {addAFile: {selectedFile: string, newFilename: string, description: string}};
-  setStateData: React.Dispatch<React.SetStateAction<{addAFile: {selectedFile: string, newFilename: string, description: string}}>>;
-  database: {[index: string]: {fileName: string, extension: string, description: string, dateAdded: string}};
+  stateData: stateData;
+  setStateData: React.Dispatch<React.SetStateAction<stateData>>;
+  database: database;
 }
 
 const AddAFile = ({ stateData, setStateData, database }: Props) => {

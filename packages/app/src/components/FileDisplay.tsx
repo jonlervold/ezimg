@@ -1,6 +1,8 @@
+import { database } from "../util/databaseInterface";
+
 type Props = {
   serverUrl: string;
-  database: {[index: string]: {fileName: string, extension: string, description: string, dateAdded: string}};
+  database: database;
 }
 
 const FileDisplay = ({ serverUrl, database }: Props) => {

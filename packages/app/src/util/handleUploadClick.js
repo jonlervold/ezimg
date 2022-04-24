@@ -67,7 +67,6 @@ const handleUploadClick = (
   // new
 
   const selectedImage = document.getElementById('fileSelect').files[0];
-  console.log(selectedImage);
 
   const postImage = async () => {
     const res = await axios.post(

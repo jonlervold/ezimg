@@ -1,7 +1,7 @@
-import handleDescriptionChange from "../util/handleDescriptionChange";
-import handleNewFilenameChange from "../util/handleNewFilenameChange";
-import handleSelectedFileChange from "../util/handleSelectedFileChange";
-import handleUploadClick from "../util/handleUploadClick";
+import handleDescriptionChange from '../util/handleDescriptionChange';
+import handleNewFilenameChange from '../util/handleNewFilenameChange';
+import handleSelectedFileChange from '../util/handleSelectedFileChange';
+import handleUploadClick from '../util/handleUploadClick';
 
 const AddAFile = ({ stateData, setStateData, database }) => {
   return (
@@ -9,6 +9,7 @@ const AddAFile = ({ stateData, setStateData, database }) => {
       <h3>Add a File</h3>
       <input
         type="file"
+        id="fileSelect"
         onChange={(event) =>
           handleSelectedFileChange(event, stateData, setStateData)
         }

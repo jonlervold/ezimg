@@ -1,17 +1,14 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import * as express from 'express';
 import * as cors from "cors";
 import * as database from "./services/database"
+import * as multer from "multer"
 
 const app = express();
 
 app.use(cors());
 
 app.use(express.static("./packages/server/public"));
+app.use(express.static("./user_content"));
 
 app.use(express.json());
 
@@ -25,10 +22,15 @@ app.get("/database", (req, res) => {
 
 app.put("/database", (req, res) => {
   res.send("Received PUT request in /database");
-  // needs to actually update the database here... HOW?
-  console.log(req.body); // ??
-  database.set(req.body);
+  // temporarily disabled to avoid adding constantly to database during tests
+  // database.set(req.body);
 });
+
+app.post("/user_content/images", (req, res) => {
+  res.send("Received POST request in /user_content/images")
+  console.log(req)
+  database.postImage(req)
+})
 
 
 const port = process.env.port || 3333;

@@ -1,16 +1,17 @@
 import AddAFile from "./components/AddAFile";
 import "./App.css";
-import FileDisplay from "./components/FileDisplay";
 import { stateTable } from "./stateTable";
 import { useEffect, useState } from "react";
 import PaginationNavigation from "./components/PaginationNavigation";
 import axios from "axios";
+import FileDisplay from "./components/FileDisplay";
+import { loadingObject } from "./util/loadingObject";
 
 function App() {
   const [stateData, setStateData] = useState(stateTable);
   const serverUrl = "http://localhost:3333";
 
-  const [database, setDatabase] = useState("LOADING");
+  const [database, setDatabase] = useState(loadingObject);
   useEffect(() => {
     const fetchDatabase = async () => {
       const res = await axios.get("http://localhost:3333/database");

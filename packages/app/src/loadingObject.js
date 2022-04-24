@@ -1,7 +1,7 @@
 export const loadingObject = {
   loading: {
     fileName: 'loading',
-    extension: 'loading',
+    extension: 'jpg',
     description: 'loading',
     dateAdded: 'loading',
   },

@@ -1,6 +1,7 @@
 import React from 'react';
 import { stateData } from '../stateTable';
-import { database } from '../util/databaseInterface';
+import { database } from '../types/databaseInterface';
+
 import handleDescriptionChange from '../util/handleDescriptionChange';
 import handleNewFilenameChange from '../util/handleNewFilenameChange';
 import handleSelectedFileChange from '../util/handleSelectedFileChange';

@@ -1,4 +1,4 @@
-import { database } from "../util/databaseInterface";
+import { database } from "../types/databaseInterface";
 
 type Props = {
   serverUrl: string;

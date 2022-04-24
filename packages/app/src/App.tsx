@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import PaginationNavigation from "./components/PaginationNavigation";
 import axios from "axios";
 import FileDisplay from "./components/FileDisplay";
-import { loadingObject } from "./util/loadingObject";
+import { loadingObject } from "./loadingObject";
 import AddAFile from "./components/AddAFile";
 import { stateTable } from "./stateTable";
 
 function App() {
+  
   const [stateData, setStateData] = useState(stateTable);
   const serverUrl = "http://localhost:3333";
 

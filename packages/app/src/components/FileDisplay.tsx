@@ -1,7 +1,6 @@
 type Props = {
   serverUrl: string;
-  database: {[index: string]: any}; // "have to define what kind of index type the object has" what is this syntax?
-  // what do you do instead of any here?
+  database: {[index: string]: {fileName: string, extension: string, description: string, dateAdded: string}};
 }
 
 const FileDisplay = ({ serverUrl, database }: Props) => {

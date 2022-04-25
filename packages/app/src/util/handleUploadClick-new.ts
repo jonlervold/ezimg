@@ -63,8 +63,7 @@
 
 //   // new
 
-// //   const selectedImage = document.getElementById('fileSelect').files[0]
-// const selectedImage = stateData.addAFile.selectedFile
+//   const selectedImage = document.getElementById('fileSelect').files[0]
 
 //   const postImage = async () => {
 //     const res = await axios.post(

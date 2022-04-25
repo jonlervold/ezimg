@@ -6,7 +6,7 @@ const handleSelectedFileChange = (event: React.ChangeEvent<HTMLInputElement>, st
       ...stateData,
       addAFile: {
         ...stateData.addAFile,
-        selectedFile: event.target.value,
+        selectedFile: event.target.value, // event.target.files is the actual file...
       },
     };
     setStateData(newState);

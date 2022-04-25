@@ -50,8 +50,8 @@ const AddAFile = ({ stateData, setStateData, database }: Props) => {
       <br />
       <br />
       <button
-        onClick={(event) =>
-          handleUploadClick(event, stateData, setStateData, database)
+        onClick={() =>
+          handleUploadClick(stateData, setStateData, database)
         }
       >
         Upload

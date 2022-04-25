@@ -1,13 +1,6 @@
 import axios from 'axios';
-import fetchDatabase from './fetchDatabase';
 
-const handleUploadClick = (
-  event,
-  stateData,
-  setStateData,
-  database,
-  setDatabase
-) => {
+const handleUploadClick = (stateData, setStateData, database) => {
   // ADD if no file selected, give error and stop
   // ADD if name already in database, give error and stop
 

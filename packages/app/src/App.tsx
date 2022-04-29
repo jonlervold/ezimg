@@ -1,21 +1,21 @@
-import "./App.css";
-import { useEffect, useState } from "react";
-import PaginationNavigation from "./components/PaginationNavigation";
-import axios from "axios";
-import FileDisplay from "./components/FileDisplay";
-import { loadingObject } from "./loadingObject";
-import AddAFile from "./components/AddAFile";
-import { stateTable } from "./stateTable";
+import './App.css';
+import { useEffect, useState } from 'react';
+import PaginationNavigation from './components/PaginationNavigation';
+import axios from 'axios';
+import FileDisplay from './components/FileDisplay';
+import { loadingObject } from './loadingObject';
+import AddAFile from './components/AddAFile';
+import { stateTable } from './stateTable';
+import Uploader from './app/Uploader';
 
 function App() {
-  
   const [stateData, setStateData] = useState(stateTable);
-  const serverUrl = "http://localhost:3333";
+  const serverUrl = 'http://localhost:3333';
 
   const [database, setDatabase] = useState(loadingObject);
   useEffect(() => {
     const fetchDatabase = async () => {
-      const res = await axios.get("http://localhost:3333/database");
+      const res = await axios.get('http://localhost:3333/database');
       setDatabase(res.data);
     };
     fetchDatabase();
@@ -23,20 +23,26 @@ function App() {
 
   return (
     <div>
-      <h1>DIY IMG</h1>
-      <AddAFile
-        stateData={stateData}
-        setStateData={setStateData}
-        database={database}
-      />
-      <br />
-      <br />
-      <FileDisplay serverUrl={serverUrl} database={database} />
-      {/* <PaginationNavigation /> */}
-      {/* <br />
-      <br /> */}
+      <Uploader />
     </div>
   );
+
+  // return (
+  //   <div>
+  //     <h1>DIY IMG</h1>
+  //     <AddAFile
+  //       stateData={stateData}
+  //       setStateData={setStateData}
+  //       database={database}
+  //     />
+  //     <br />
+  //     <br />
+  //     <FileDisplay serverUrl={serverUrl} database={database} />
+  //     {/* <PaginationNavigation /> */}
+  //     {/* <br />
+  //     <br /> */}
+  //   </div>
+  // );
 }
 
 export default App;

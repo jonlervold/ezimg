@@ -2,7 +2,16 @@ import { Express } from 'express';
 import { writeFileSync } from 'fs';
 import * as multer from 'multer';
 
-const uploader = multer({ dest: 'uploads/' });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './user_content/images/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const uploader = multer({ storage: storage });
 
 const upload = (app: Express) => {
   app.post('/upload', uploader.single('file'), async (req, res) => {

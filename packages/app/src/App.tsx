@@ -1,14 +1,17 @@
 import './App.css';
 import FileDisplay from './components/FileDisplay';
 import Uploader from './app/Uploader';
+import { useState } from 'react';
 
 function App() {
   const serverUrl = 'http://localhost:3333';
+  const [refresh, setRefresh] = useState<number>(0);
+  console.log('app', refresh);
 
   return (
     <div>
-      <Uploader />
-      <FileDisplay serverUrl={serverUrl} />
+      <Uploader refresh={refresh} setRefresh={setRefresh} />
+      <FileDisplay serverUrl={serverUrl} refresh={refresh} />
     </div>
   );
 }

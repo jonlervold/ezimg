@@ -5,18 +5,17 @@ import { database } from '../types/Database';
 
 type Props = {
   serverUrl: string;
+  refresh: number;
 };
 
-const FileDisplay = ({ serverUrl }: Props) => {
+const FileDisplay = ({ serverUrl, refresh }: Props) => {
   const [database, setDatabase] = useState<database>(loadingObject);
 
-  useEffect(() => {
-    const fetchDatabase = async () => {
-      const res = await axios.get('http://localhost:3333/database');
-      setDatabase(res.data);
-    };
-    fetchDatabase();
-  }, []);
+  const fetchDatabase = async () => {
+    const res = await axios.get('http://localhost:3333/database');
+    setDatabase(res.data);
+  };
+  fetchDatabase();
 
   const fileKeys: Array<string> = Object.keys(database);
 

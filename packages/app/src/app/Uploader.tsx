@@ -1,8 +1,13 @@
-import { FC } from 'react';
+import { FC, SetStateAction } from 'react';
 import AddFile from '../components/AddFile';
 import useFileUpload from '../hooks/useFileUpload';
 
-const Uploader: FC = () => {
+interface Props {
+  refresh: number;
+  setRefresh: React.Dispatch<SetStateAction<number>>;
+}
+
+const Uploader: FC<Props> = ({ refresh, setRefresh }) => {
   const { value, error, loading, onChange, upload } = useFileUpload();
 
   return (
@@ -12,6 +17,8 @@ const Uploader: FC = () => {
         error={error}
         onChange={onChange}
         onAddRequest={upload}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
       {loading && <p>Loading...</p>}
     </div>

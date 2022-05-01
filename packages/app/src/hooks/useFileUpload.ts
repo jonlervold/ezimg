@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, SetStateAction } from 'react';
 import uploadFile from '../api/uploadFile';
 import FileUpload from '../types/FileUpload';
 
@@ -11,7 +11,10 @@ const useFileUpload = () => {
     description: '',
   });
 
-  const handleUpload = async () => {
+  const handleUpload = async (
+    refresh: number,
+    setRefresh: React.Dispatch<SetStateAction<number>>
+  ) => {
     setError(undefined);
     setIsLoading(true);
     try {
@@ -27,6 +30,7 @@ const useFileUpload = () => {
         setError(e.message);
       }
     }
+    setRefresh(refresh + 1);
     setIsLoading(false);
   };
   return {

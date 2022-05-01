@@ -1,6 +1,9 @@
+// import { Base } from './../../../app/src/components/AddFile.stories';
 import { Express } from 'express';
 import { writeFileSync } from 'fs';
 import * as multer from 'multer';
+import getNewDatabase from '../util/getNewDatabase';
+import * as fs from 'fs';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -15,20 +18,21 @@ const uploader = multer({ storage: storage });
 
 const upload = (app: Express) => {
   app.post('/upload', uploader.single('file'), async (req, res) => {
-    console.log('hello');
-    console.log({ req });
-    const fileRequest = req as unknown as { file: {} | undefined };
+    const fileRequest = req as unknown as {
+      file: {} | undefined;
+      body: { title: string; description: string } | undefined;
+    };
     const file = fileRequest.file;
     if (!file) {
       return res.sendStatus(500).end();
     }
-    // const buffer = await file.arrayBuffer();
-    console.log({ file }, typeof file);
-    // ${req.body.title as string}
-    // writeFileSync(
-    //   `./user_content/images/ads`,
-    //   buffer
-    // );
+    // console.log({ file }, typeof file);
+
+    const title = fileRequest.body.title;
+    const description = fileRequest.body.description;
+
+    const newDatabase = getNewDatabase(title, description);
+    fs.writeFileSync('./data.json', JSON.stringify(newDatabase));
 
     res.end();
   });

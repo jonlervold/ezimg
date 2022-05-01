@@ -1,6 +1,4 @@
-// import { Base } from './../../../app/src/components/AddFile.stories';
 import { Express } from 'express';
-import { writeFileSync } from 'fs';
 import * as multer from 'multer';
 import getNewDatabase from '../util/getNewDatabase';
 import * as fs from 'fs';
@@ -28,7 +26,6 @@ const upload = (app: Express) => {
     if (!file) {
       return res.sendStatus(500).end();
     }
-    // console.log({ file }, typeof file);
 
     const title = fileRequest.body.title;
     const extension = fileRequest.body.extension;

@@ -7,12 +7,10 @@ const getNewDatabase = (
 ) => {
   const database = JSON.parse(fs.readFileSync('./data.json').toString());
 
-  // if no description, add default
   if (description === '') {
     description = 'No description entered at time of upload.';
   }
 
-  // pull upload date
   const dateObject = new Date();
   const date = dateObject.getDate();
   const month = dateObject.getMonth() + 1;

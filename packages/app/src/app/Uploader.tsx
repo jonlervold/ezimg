@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import AddFile from '../components/AddFile';
 import useFileUpload from '../hooks/useFileUpload';
-import FileUpload from '../types/FileUpload';
 
 const Uploader: FC = () => {
   const { value, error, loading, onChange, upload } = useFileUpload();
+
   return (
     <div>
       <AddFile

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { loadingObject } from '../loadingObject';
-import { database } from '../types/databaseInterface';
+import { database } from '../types/Database';
 
 type Props = {
   serverUrl: string;
@@ -9,6 +9,7 @@ type Props = {
 
 const FileDisplay = ({ serverUrl }: Props) => {
   const [database, setDatabase] = useState<database>(loadingObject);
+
   useEffect(() => {
     const fetchDatabase = async () => {
       const res = await axios.get('http://localhost:3333/database');

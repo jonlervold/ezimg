@@ -66,8 +66,7 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
         />
       </div>
       <div className="form-row">
-        {/* disabled should be dependent on if a file is present */}
-        <button onClick={onAddRequest} disabled={false}>
+        <button onClick={onAddRequest} disabled={!value.file}>
           Add File
         </button>
       </div>

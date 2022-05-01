@@ -5,10 +5,9 @@ import { database } from '../types/Database';
 
 type Props = {
   serverUrl: string;
-  refresh: number;
 };
 
-const FileDisplay = ({ serverUrl, refresh }: Props) => {
+const FileDisplay = ({ serverUrl }: Props) => {
   const [database, setDatabase] = useState<database>(loadingObject);
 
   const fetchDatabase = async () => {

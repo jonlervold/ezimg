@@ -5,13 +5,11 @@ import { useState } from 'react';
 
 function App() {
   const serverUrl = 'http://localhost:3333';
-  const [refresh, setRefresh] = useState<number>(0);
-  console.log('app', refresh);
 
   return (
     <div>
-      <Uploader refresh={refresh} setRefresh={setRefresh} />
-      <FileDisplay serverUrl={serverUrl} refresh={refresh} />
+      <Uploader />
+      <FileDisplay serverUrl={serverUrl} />
     </div>
   );
 }

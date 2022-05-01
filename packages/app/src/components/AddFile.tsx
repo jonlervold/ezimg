@@ -7,12 +7,7 @@ type Props = {
   value: FileUpload;
   error?: string;
   onChange: (value: FileUpload) => void;
-  onAddRequest: (
-    refresh: number,
-    setRefresh: React.Dispatch<SetStateAction<number>>
-  ) => void;
-  refresh: number;
-  setRefresh: React.Dispatch<SetStateAction<number>>;
+  onAddRequest: () => void;
 };
 
 const Container = styled.div`
@@ -27,14 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const AddFile: FC<Props> = ({
-  value,
-  error,
-  onChange,
-  onAddRequest,
-  refresh,
-  setRefresh,
-}) => {
+const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
   const onInputChange = (key: 'title' | 'description', inputValue: string) => {
     onChange({
       ...value,
@@ -79,10 +67,7 @@ const AddFile: FC<Props> = ({
         />
       </div>
       <div className="form-row">
-        <button
-          onClick={(e) => onAddRequest(refresh, setRefresh)}
-          disabled={!value.file}
-        >
+        <button onClick={onAddRequest} disabled={!value.file}>
           Add File
         </button>
       </div>

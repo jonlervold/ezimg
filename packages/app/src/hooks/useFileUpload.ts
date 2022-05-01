@@ -11,10 +11,7 @@ const useFileUpload = () => {
     description: '',
   });
 
-  const handleUpload = async (
-    refresh: number,
-    setRefresh: React.Dispatch<SetStateAction<number>>
-  ) => {
+  const handleUpload = async () => {
     setError(undefined);
     setIsLoading(true);
     try {
@@ -30,7 +27,6 @@ const useFileUpload = () => {
         setError(e.message);
       }
     }
-    setRefresh(refresh + 1);
     setIsLoading(false);
   };
   return {

@@ -5,25 +5,15 @@ import axios from 'axios';
 import FileDisplay from './components/FileDisplay';
 import { loadingObject } from './loadingObject';
 import AddAFile from './components/AddAFile';
-import { stateTable } from './stateTable';
 import Uploader from './app/Uploader';
 
 function App() {
-  const [stateData, setStateData] = useState(stateTable);
   const serverUrl = 'http://localhost:3333';
-
-  const [database, setDatabase] = useState(loadingObject);
-  useEffect(() => {
-    const fetchDatabase = async () => {
-      const res = await axios.get('http://localhost:3333/database');
-      setDatabase(res.data);
-    };
-    fetchDatabase();
-  }, [stateData.addAFile.selectedFile]);
 
   return (
     <div>
       <Uploader />
+      <FileDisplay serverUrl={serverUrl} />
     </div>
   );
 

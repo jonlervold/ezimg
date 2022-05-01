@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, './user_content/images/');
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    cb(null, `${req.body.title}.${req.body.extension}`);
   },
 });
 
@@ -20,7 +20,9 @@ const upload = (app: Express) => {
   app.post('/upload', uploader.single('file'), async (req, res) => {
     const fileRequest = req as unknown as {
       file: {} | undefined;
-      body: { title: string; description: string } | undefined;
+      body:
+        | { title: string; extension: string; description: string }
+        | undefined;
     };
     const file = fileRequest.file;
     if (!file) {
@@ -29,9 +31,10 @@ const upload = (app: Express) => {
     // console.log({ file }, typeof file);
 
     const title = fileRequest.body.title;
+    const extension = fileRequest.body.extension;
     const description = fileRequest.body.description;
 
-    const newDatabase = getNewDatabase(title, description);
+    const newDatabase = getNewDatabase(title, extension, description);
     fs.writeFileSync('./data.json', JSON.stringify(newDatabase));
 
     res.end();

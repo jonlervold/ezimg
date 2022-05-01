@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import FileUpload from '../types/FileUpload';
+import getNameAndExtension from '../util/getNameAndExtension';
 
 type Props = {
   value: FileUpload;
@@ -32,12 +33,15 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
     if (files === null) return;
     if (files.item.length !== 1) return;
     const file: File = files[0];
+    const filename = getNameAndExtension(file);
     onChange({
       ...value,
-      title: value.title || file.name,
+      title: filename.basename,
+      extension: filename.extension,
       file,
     });
   };
+
   return (
     <Container>
       <div className="form-row">
@@ -50,8 +54,9 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
         <input
           type="text"
           value={value.title}
-          onChange={(e) => onInputChange('title', e.target.value)}
-        />
+          onChange={(e) => onInputChange('title', e.target.value.toLowerCase())}
+        />{' '}
+        .{value.extension}
       </div>
       <div className="form-row">
         <label>Description</label>

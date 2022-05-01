@@ -1,14 +1,11 @@
 import * as fs from 'fs';
 
-const getNewDatabase = (title: string, description: string) => {
+const getNewDatabase = (
+  title: string,
+  extension: string,
+  description: string
+) => {
   const database = JSON.parse(fs.readFileSync('./data.json').toString());
-
-  // get filename and extension from path
-  const lastInstanceOfPeriod = title.lastIndexOf('.');
-  const prePeriod = title.slice(0, lastInstanceOfPeriod);
-  const lastBackslash = prePeriod.lastIndexOf('\\');
-  const filename = prePeriod.slice(lastBackslash + 1);
-  const extension = title.slice(lastInstanceOfPeriod + 1).toLowerCase();
 
   // if no description, add default
   if (description === '') {
@@ -24,8 +21,8 @@ const getNewDatabase = (title: string, description: string) => {
 
   const newDatabase = {
     ...database,
-    [filename]: {
-      fileName: filename,
+    [title]: {
+      fileName: title,
       extension: extension,
       description: description,
       dateAdded: currentDate,

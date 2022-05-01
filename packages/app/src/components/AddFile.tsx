@@ -56,7 +56,8 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
           value={value.title}
           onChange={(e) => onInputChange('title', e.target.value.toLowerCase())}
         />{' '}
-        .{value.extension}
+        {value.extension !== '' && '.'}
+        {value.extension}
       </div>
       <div className="form-row">
         <label>Description</label>

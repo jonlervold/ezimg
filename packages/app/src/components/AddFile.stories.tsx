@@ -24,5 +24,5 @@ const Template: ComponentStory<typeof AddFile> = (args) => {
 
 export const Base = Template.bind({});
 Base.args = {
-  value: { title: '', description: '' },
+  value: { title: '', description: '', extension: '' },
 };

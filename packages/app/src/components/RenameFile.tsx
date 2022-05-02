@@ -13,13 +13,10 @@ const RenameFile: FC<Props> = ({ filename, extension }) => {
     setValue('');
   };
   return (
-    <>
-      <td>
-        <input onChange={(e) => setValue(e.target.value)} value={value}></input>{' '}
-        <button onClick={() => onClick()}>Rename</button>
-      </td>
-      ;
-    </>
+    <td>
+      <input onChange={(e) => setValue(e.target.value)} value={value}></input>{' '}
+      <button onClick={() => onClick()}>Rename</button>
+    </td>
   );
 };
 

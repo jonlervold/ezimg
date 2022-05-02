@@ -1,9 +1,10 @@
 import * as database from '../services/database';
 import { Express } from 'express';
 import upload from './upload';
+import remove from './remove';
 
 const app = (app: Express) => {
-  const routes = [upload];
+  const routes = [upload, remove];
   for (const route of routes) {
     route(app);
   }

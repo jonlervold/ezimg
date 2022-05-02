@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import fetchDatabase from '../api/fetchDatabase';
 import { loadingObject } from '../loadingObject';
 import { database } from '../types/Database';
+import removeFile from '../api/removeFile';
 
 type Props = {
   serverUrl: string;
@@ -36,10 +37,16 @@ const FileDisplay = ({ serverUrl }: Props) => {
             <td>
               {database[key].fileName}.{database[key].extension}
             </td>
+            <td>
+              <input></input> <button>Rename</button>
+            </td>
           </tr>
           <tr>
             <td>Description:</td>
             <td>{database[key].description}</td>
+            <td>
+              <input></input> <button>Change Description</button>
+            </td>
           </tr>
           <tr>
             <td>URL:</td>
@@ -47,14 +54,19 @@ const FileDisplay = ({ serverUrl }: Props) => {
               {serverUrl}/images/{database[key].fileName}.
               {database[key].extension}
             </td>
+            <td>
+              {' '}
+              <button
+                onClick={() =>
+                  removeFile(database[key].fileName, database[key].extension)
+                }
+              >
+                Remove {database[key].fileName}.{database[key].extension}
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
-      <button>
-        Remove {database[key].fileName}.{database[key].extension}
-      </button>
-      <br />
-      <br />
     </div>
   ));
   return <div>{tables}</div>;

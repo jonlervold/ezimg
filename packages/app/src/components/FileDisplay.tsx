@@ -1,9 +1,9 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import fetchDatabase from '../api/fetchDatabase';
 import { loadingObject } from '../loadingObject';
 import { database } from '../types/Database';
 import removeFile from '../api/removeFile';
+import RenameFile from './RenameFile';
 
 type Props = {
   serverUrl: string;
@@ -37,9 +37,10 @@ const FileDisplay = ({ serverUrl }: Props) => {
             <td>
               {database[key].fileName}.{database[key].extension}
             </td>
-            <td>
-              <input></input> <button>Rename</button>
-            </td>
+            <RenameFile
+              filename={database[key].fileName}
+              extension={database[key].extension}
+            />
           </tr>
           <tr>
             <td>Description:</td>

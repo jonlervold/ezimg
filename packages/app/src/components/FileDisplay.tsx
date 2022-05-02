@@ -4,6 +4,7 @@ import { loadingObject } from '../loadingObject';
 import { database } from '../types/Database';
 import removeFile from '../api/removeFile';
 import RenameFile from './RenameFile';
+import ChangeDescription from './ChangeDescription';
 
 type Props = {
   serverUrl: string;
@@ -45,9 +46,10 @@ const FileDisplay = ({ serverUrl }: Props) => {
           <tr>
             <td>Description:</td>
             <td>{database[key].description}</td>
-            <td>
-              <input></input> <button>Change Description</button>
-            </td>
+            <ChangeDescription
+              filename={database[key].fileName}
+              extension={database[key].extension}
+            />
           </tr>
           <tr>
             <td>URL:</td>

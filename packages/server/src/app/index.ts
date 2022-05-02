@@ -3,9 +3,10 @@ import { Express } from 'express';
 import upload from './upload';
 import remove from './remove';
 import rename from './rename';
+import changeDescription from './changeDescription';
 
 const app = (app: Express) => {
-  const routes = [upload, remove, rename];
+  const routes = [upload, remove, rename, changeDescription];
   for (const route of routes) {
     route(app);
   }

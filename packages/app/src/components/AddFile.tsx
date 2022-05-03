@@ -52,7 +52,12 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
     <Container>
       <div className="form-row">
         <label>Upload File</label>
-        <input type="file" onChange={(e) => handleFileInput(e.target.files)} />
+        <label>.jpg, .jpeg, .tif, .tiff, .png, .bmp, .gif</label>
+        <input
+          type="file"
+          accept=".jpg,.jpeg,.tif,.tiff,.png,.bmp,.gif"
+          onChange={(e) => handleFileInput(e.target.files)}
+        />
       </div>
       <div className="form-row">
         <label>Name</label>

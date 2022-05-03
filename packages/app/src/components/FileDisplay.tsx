@@ -1,22 +1,18 @@
-import { FC, SetStateAction, useEffect, useState } from 'react';
-import fetchDatabase from '../api/fetchDatabase';
-import { loadingObject } from '../loadingObject';
+import { FC, SetStateAction } from 'react';
 import { database } from '../types/Database';
-import removeFile from '../api/removeFile';
 import RenameFile from './RenameFile';
 import ChangeDescription from './ChangeDescription';
 import RemoveFile from './RemoveFile';
+import { serverUrl } from '../serverUrl';
 
 type Props = {
-  serverUrl: string;
   database: database;
+  fileKeys: Array<string>;
   setChange: React.Dispatch<SetStateAction<string>>;
 };
 
-const FileDisplay: FC<Props> = ({ serverUrl, database, setChange }) => {
-  const fileKeys: Array<string> = Object.keys(database);
-
-  const tables = fileKeys.reverse().map((key: string, index: number) => (
+const FileDisplay: FC<Props> = ({ database, fileKeys, setChange }) => {
+  const tables = fileKeys.map((key: string, index: number) => (
     <div key={index}>
       <img
         src={`${serverUrl}/images/${database[key].fileName}.${database[key].extension}`}

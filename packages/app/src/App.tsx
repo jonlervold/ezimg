@@ -1,15 +1,13 @@
 import './App.css';
 import FileDisplay from './components/FileDisplay';
 import Uploader from './app/Uploader';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import fetchDatabase from './api/fetchDatabase';
-import { loadingObject } from './loadingObject';
-import { database } from './types/Database';
 import useApp from './hooks/useApp';
+import ViewModify from './app/ViewModify';
 
 function App() {
-  const { serverUrl, change, setChange, database, setDatabase, isLoading } =
-    useApp();
+  const { change, setChange, database, setDatabase, isLoading } = useApp();
 
   useEffect(() => {
     const updateDatabaseView = async () => {
@@ -25,11 +23,7 @@ function App() {
       <Uploader setChange={setChange} />
       {isLoading && <h1>Requesting Images</h1>}
       {!isLoading && Object.keys(database).length > 0 && (
-        <FileDisplay
-          serverUrl={serverUrl}
-          database={database}
-          setChange={setChange}
-        />
+        <ViewModify database={database} setChange={setChange} />
       )}
       {!isLoading && Object.keys(database).length === 0 && (
         <p>Database currently empty! Add an image to display content.</p>
@@ -39,9 +33,6 @@ function App() {
 }
 
 export default App;
-
-// if duplicate filename, append something
-// don't allow symbols in file name field only lower letters and numbers
 
 // image order
 

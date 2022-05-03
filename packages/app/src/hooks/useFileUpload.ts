@@ -1,4 +1,5 @@
 import { useState, SetStateAction } from 'react';
+import fetchDatabase from '../api/fetchDatabase';
 import uploadFile from '../api/uploadFile';
 import FileUpload from '../types/FileUpload';
 
@@ -17,6 +18,9 @@ const useFileUpload = (setChange: React.Dispatch<SetStateAction<string>>) => {
     let answer = '';
     try {
       if (!value.file) throw new Error('File is required');
+      if (value.title === '') throw new Error('Name cannot be blank');
+      const res = await fetchDatabase();
+      if (value.title in res.data) throw new Error('Name already in database');
       answer = await uploadFile(
         value.title,
         value.extension,
@@ -30,6 +34,11 @@ const useFileUpload = (setChange: React.Dispatch<SetStateAction<string>>) => {
     }
     setIsLoading(false);
     setChange(answer);
+    setValue({
+      title: '',
+      extension: '',
+      description: '',
+    });
   };
   return {
     value,

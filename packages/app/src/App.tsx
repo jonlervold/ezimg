@@ -9,8 +9,8 @@ import { database } from './types/Database';
 function App() {
   const serverUrl = 'http://localhost:3333';
   const [change, setChange] = useState('');
-
   const [database, setDatabase] = useState<database>(loadingObject);
+  const isLoading = 'loading' in database && database['loading'].msAdded === 0;
 
   useEffect(() => {
     const updateDatabaseView = async () => {
@@ -23,11 +23,14 @@ function App() {
   return (
     <div>
       <Uploader setChange={setChange} />
-      <FileDisplay
-        serverUrl={serverUrl}
-        database={database}
-        setChange={setChange}
-      />
+      {isLoading && <h1>Requesting Images</h1>}
+      {!isLoading && (
+        <FileDisplay
+          serverUrl={serverUrl}
+          database={database}
+          setChange={setChange}
+        />
+      )}
     </div>
   );
 }

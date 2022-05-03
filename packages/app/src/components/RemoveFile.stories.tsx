@@ -1,16 +1,16 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { useState } from 'react';
-import ChangeDescription from './ChangeDescription';
+import RemoveFile from './RemoveFile';
 
 export default {
-  component: ChangeDescription,
-  title: 'actions/ChangeDescription',
+  component: RemoveFile,
+  title: 'actions/RemoveFile',
   argTypes: { onChange: { action: 'onInputChange' } },
-} as ComponentMeta<typeof ChangeDescription>;
+} as ComponentMeta<typeof RemoveFile>;
 
-const Template: ComponentStory<typeof ChangeDescription> = (args) => {
+const Template: ComponentStory<typeof RemoveFile> = (args) => {
   return (
-    <ChangeDescription
+    <RemoveFile
       filename={args.filename}
       extension={args.extension}
       setChange={args.setChange}
@@ -20,6 +20,6 @@ const Template: ComponentStory<typeof ChangeDescription> = (args) => {
 
 export const Base = Template.bind({});
 Base.args = {
-  filename: '',
-  extension: '',
+  filename: 'filename',
+  extension: 'extension',
 };

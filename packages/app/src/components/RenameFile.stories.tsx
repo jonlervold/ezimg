@@ -1,16 +1,16 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { useState } from 'react';
-import ChangeDescription from './ChangeDescription';
+import RenameFile from './RenameFile';
 
 export default {
-  component: ChangeDescription,
-  title: 'actions/ChangeDescription',
+  component: RenameFile,
+  title: 'actions/RenameFile',
   argTypes: { onChange: { action: 'onInputChange' } },
-} as ComponentMeta<typeof ChangeDescription>;
+} as ComponentMeta<typeof RenameFile>;
 
-const Template: ComponentStory<typeof ChangeDescription> = (args) => {
+const Template: ComponentStory<typeof RenameFile> = (args) => {
   return (
-    <ChangeDescription
+    <RenameFile
       filename={args.filename}
       extension={args.extension}
       setChange={args.setChange}

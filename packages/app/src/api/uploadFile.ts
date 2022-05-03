@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const uploadFile = (
+const uploadFile = async (
   title: string,
   extension: string,
   description: string,
@@ -11,11 +11,19 @@ const uploadFile = (
   formData.append('extension', extension);
   formData.append('description', description);
   formData.append('file', file);
-  axios.post('http://localhost:3333/upload', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+
+  let answer = 'failure';
+
+  await axios
+    .post('http://localhost:3333/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((response) => {
+      answer = Date.now().toString();
+    });
+  return answer;
 };
 
 export default uploadFile;

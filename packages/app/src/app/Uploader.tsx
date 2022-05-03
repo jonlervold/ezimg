@@ -2,8 +2,12 @@ import { FC, SetStateAction } from 'react';
 import AddFile from '../components/AddFile';
 import useFileUpload from '../hooks/useFileUpload';
 
-const Uploader: FC = () => {
-  const { value, error, loading, onChange, upload } = useFileUpload();
+type Props = {
+  setChange: React.Dispatch<SetStateAction<string>>;
+};
+
+const Uploader: FC<Props> = ({ setChange }) => {
+  const { value, error, loading, onChange, upload } = useFileUpload(setChange);
 
   return (
     <div>

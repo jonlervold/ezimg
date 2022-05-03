@@ -2,7 +2,7 @@ import { useState, SetStateAction } from 'react';
 import uploadFile from '../api/uploadFile';
 import FileUpload from '../types/FileUpload';
 
-const useFileUpload = () => {
+const useFileUpload = (setChange: React.Dispatch<SetStateAction<string>>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [value, setValue] = useState<FileUpload>({
@@ -14,9 +14,10 @@ const useFileUpload = () => {
   const handleUpload = async () => {
     setError(undefined);
     setIsLoading(true);
+    let answer = '';
     try {
       if (!value.file) throw new Error('File is required');
-      await uploadFile(
+      answer = await uploadFile(
         value.title,
         value.extension,
         value.description,
@@ -28,6 +29,7 @@ const useFileUpload = () => {
       }
     }
     setIsLoading(false);
+    setChange(answer);
   };
   return {
     value,

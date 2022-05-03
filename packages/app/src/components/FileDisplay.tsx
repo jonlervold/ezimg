@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import fetchDatabase from '../api/fetchDatabase';
 import { loadingObject } from '../loadingObject';
 import { database } from '../types/Database';
@@ -8,17 +8,10 @@ import ChangeDescription from './ChangeDescription';
 
 type Props = {
   serverUrl: string;
+  database: database;
 };
 
-const FileDisplay = ({ serverUrl }: Props) => {
-  const [database, setDatabase] = useState<database>(loadingObject);
-
-  const updateDatabaseView = async () => {
-    const res = await fetchDatabase();
-    setDatabase(res.data);
-  };
-  updateDatabaseView();
-
+const FileDisplay: FC<Props> = ({ serverUrl, database }) => {
   const fileKeys: Array<string> = Object.keys(database);
 
   const tables = fileKeys.reverse().map((key: string, index: number) => (
@@ -30,7 +23,7 @@ const FileDisplay = ({ serverUrl }: Props) => {
       <table>
         <tbody>
           <tr>
-            <td>Date Added:</td>
+            <td>Added:</td>
             <td>{database[key].dateAdded}</td>
           </tr>
           <tr>

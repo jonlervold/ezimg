@@ -25,12 +25,15 @@ function App() {
       <h1>DIY IMG</h1>
       <Uploader setChange={setChange} />
       {isLoading && <h1>Requesting Images</h1>}
-      {!isLoading && (
+      {!isLoading && Object.keys(database).length > 0 && (
         <FileDisplay
           serverUrl={serverUrl}
           database={database}
           setChange={setChange}
         />
+      )}
+      {!isLoading && Object.keys(database).length === 0 && (
+        <p>Database currently empty! Add an image to display content.</p>
       )}
     </div>
   );

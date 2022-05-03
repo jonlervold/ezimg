@@ -33,7 +33,7 @@ const upload = (app: Express) => {
 
     const newDatabase = getNewDatabase(title, extension, description);
     fs.writeFileSync('./data.json', JSON.stringify(newDatabase));
-    res.send('success');
+    res.send(Date.now().toString());
     res.end();
   });
 };

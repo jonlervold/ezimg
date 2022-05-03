@@ -3,8 +3,6 @@ import * as fs from 'fs';
 
 const changeDescription = (app: Express) => {
   app.put('/changeDescription', async (req, res) => {
-    console.log(req.body.value, req.body.filename, req.body.extension);
-
     const database = JSON.parse(fs.readFileSync('./data.json').toString());
 
     database[req.body.filename] = {
@@ -13,6 +11,7 @@ const changeDescription = (app: Express) => {
     };
 
     fs.writeFileSync('./data.json', JSON.stringify(database));
+    res.send(Date.now().toString());
   });
 };
 

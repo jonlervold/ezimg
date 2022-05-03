@@ -8,6 +8,7 @@ const remove = (app: Express) => {
     fs.writeFileSync('./data.json', JSON.stringify(database));
     const path = `./user_content/images/${req.body.filename}.${req.body.extension}`;
     fs.unlinkSync(path);
+    res.send(Date.now().toString());
   });
 };
 

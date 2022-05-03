@@ -13,11 +13,9 @@ function App() {
   const [database, setDatabase] = useState<database>(loadingObject);
 
   useEffect(() => {
-    console.log('useeffect triggered');
     const updateDatabaseView = async () => {
       const res = await fetchDatabase();
       setDatabase(res.data);
-      console.log(database);
     };
     updateDatabaseView();
   }, [change]);
@@ -25,7 +23,11 @@ function App() {
   return (
     <div>
       <Uploader setChange={setChange} />
-      <FileDisplay serverUrl={serverUrl} database={database} />
+      <FileDisplay
+        serverUrl={serverUrl}
+        database={database}
+        setChange={setChange}
+      />
     </div>
   );
 }

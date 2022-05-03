@@ -1,16 +1,18 @@
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useState } from 'react';
 import changeFileDescription from '../api/changeFileDescription';
 
 type Props = {
   filename: string;
   extension: string;
+  setChange: React.Dispatch<SetStateAction<string>>;
 };
 
-const ChangeDescription: FC<Props> = ({ filename, extension }) => {
+const ChangeDescription: FC<Props> = ({ filename, extension, setChange }) => {
   const [value, setValue] = useState<string>('');
-  const onClick = () => {
-    changeFileDescription(value, filename, extension);
+  const onClick = async () => {
+    const answer = await changeFileDescription(value, filename, extension);
     setValue('');
+    setChange(answer);
   };
   return (
     <td>

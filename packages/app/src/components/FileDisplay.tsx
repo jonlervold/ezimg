@@ -1,17 +1,19 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, SetStateAction, useEffect, useState } from 'react';
 import fetchDatabase from '../api/fetchDatabase';
 import { loadingObject } from '../loadingObject';
 import { database } from '../types/Database';
 import removeFile from '../api/removeFile';
 import RenameFile from './RenameFile';
 import ChangeDescription from './ChangeDescription';
+import RemoveFile from './RemoveFile';
 
 type Props = {
   serverUrl: string;
   database: database;
+  setChange: React.Dispatch<SetStateAction<string>>;
 };
 
-const FileDisplay: FC<Props> = ({ serverUrl, database }) => {
+const FileDisplay: FC<Props> = ({ serverUrl, database, setChange }) => {
   const fileKeys: Array<string> = Object.keys(database);
 
   const tables = fileKeys.reverse().map((key: string, index: number) => (
@@ -34,6 +36,7 @@ const FileDisplay: FC<Props> = ({ serverUrl, database }) => {
             <RenameFile
               filename={database[key].fileName}
               extension={database[key].extension}
+              setChange={setChange}
             />
           </tr>
           <tr>
@@ -42,6 +45,7 @@ const FileDisplay: FC<Props> = ({ serverUrl, database }) => {
             <ChangeDescription
               filename={database[key].fileName}
               extension={database[key].extension}
+              setChange={setChange}
             />
           </tr>
           <tr>
@@ -50,16 +54,11 @@ const FileDisplay: FC<Props> = ({ serverUrl, database }) => {
               {serverUrl}/images/{database[key].fileName}.
               {database[key].extension}
             </td>
-            <td>
-              {' '}
-              <button
-                onClick={() =>
-                  removeFile(database[key].fileName, database[key].extension)
-                }
-              >
-                Remove {database[key].fileName}.{database[key].extension}
-              </button>
-            </td>
+            <RemoveFile
+              filename={database[key].fileName}
+              extension={database[key].extension}
+              setChange={setChange}
+            />
           </tr>
         </tbody>
       </table>

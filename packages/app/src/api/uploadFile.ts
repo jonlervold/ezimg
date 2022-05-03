@@ -21,7 +21,7 @@ const uploadFile = async (
       },
     })
     .then((response) => {
-      answer = Date.now().toString();
+      answer = response.data;
     });
   return answer;
 };

@@ -1,16 +1,18 @@
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useState } from 'react';
 import renameFile from '../api/renameFile';
 
 type Props = {
   filename: string;
   extension: string;
+  setChange: React.Dispatch<SetStateAction<string>>;
 };
 
-const RenameFile: FC<Props> = ({ filename, extension }) => {
+const RenameFile: FC<Props> = ({ filename, extension, setChange }) => {
   const [value, setValue] = useState<string>('');
-  const onClick = () => {
-    renameFile(value, filename, extension);
+  const onClick = async () => {
+    const answer = await renameFile(value, filename, extension);
     setValue('');
+    setChange(answer);
   };
   return (
     <td>

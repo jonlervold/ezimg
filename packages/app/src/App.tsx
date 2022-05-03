@@ -5,12 +5,11 @@ import { useEffect, useState } from 'react';
 import fetchDatabase from './api/fetchDatabase';
 import { loadingObject } from './loadingObject';
 import { database } from './types/Database';
+import useApp from './hooks/useApp';
 
 function App() {
-  const serverUrl = 'http://localhost:3333';
-  const [change, setChange] = useState('');
-  const [database, setDatabase] = useState<database>(loadingObject);
-  const isLoading = 'loading' in database && database['loading'].msAdded === 0;
+  const { serverUrl, change, setChange, database, setDatabase, isLoading } =
+    useApp();
 
   useEffect(() => {
     const updateDatabaseView = async () => {

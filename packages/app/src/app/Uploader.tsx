@@ -17,7 +17,7 @@ const Uploader: FC<Props> = ({ setChange }) => {
         onChange={onChange}
         onAddRequest={upload}
       />
-      {loading && <p>Loading...</p>}
+      {loading && <p>Uploading...</p>}
     </div>
   );
 };

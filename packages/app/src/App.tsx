@@ -22,6 +22,7 @@ function App() {
 
   return (
     <div>
+      <h1>DIY IMG</h1>
       <Uploader setChange={setChange} />
       {isLoading && <h1>Requesting Images</h1>}
       {!isLoading && (

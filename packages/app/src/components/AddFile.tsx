@@ -23,7 +23,13 @@ const Container = styled.div`
 `;
 
 const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
-  const onInputChange = (key: 'title' | 'description', inputValue: string) => {
+  const onTitleChange = (key: 'title', inputValue: string) => {
+    onChange({
+      ...value,
+      [key]: inputValue.replace(/[^a-z\d-]/g, ''),
+    });
+  };
+  const onDescriptionChange = (key: 'description', inputValue: string) => {
     onChange({
       ...value,
       [key]: inputValue,
@@ -36,7 +42,7 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
     const filename = getNameAndExtension(file);
     onChange({
       ...value,
-      title: filename.basename,
+      title: filename.basename.replace(/[^a-z\d-]/g, ''),
       extension: filename.extension,
       file,
     });
@@ -47,14 +53,13 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
       <div className="form-row">
         <label>Upload File</label>
         <input type="file" onChange={(e) => handleFileInput(e.target.files)} />
-        {error && <p className="form-row-error">{error}</p>}
       </div>
       <div className="form-row">
         <label>Name</label>
         <input
           type="text"
           value={value.title}
-          onChange={(e) => onInputChange('title', e.target.value.toLowerCase())}
+          onChange={(e) => onTitleChange('title', e.target.value.toLowerCase())}
         />{' '}
         {value.extension !== '' && '.'}
         {value.extension}
@@ -63,13 +68,17 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
         <label>Description</label>
         <textarea
           value={value.description}
-          onChange={(e) => onInputChange('description', e.target.value)}
+          onChange={(e) => onDescriptionChange('description', e.target.value)}
         />
       </div>
       <div className="form-row">
-        <button onClick={onAddRequest} disabled={!value.file}>
+        <button
+          onClick={onAddRequest}
+          disabled={value.title === '' || !value.file}
+        >
           Add File
         </button>
+        {error && <p className="form-row-error">{error}</p>}
       </div>
     </Container>
   );

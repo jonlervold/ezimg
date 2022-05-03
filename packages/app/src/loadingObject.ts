@@ -4,5 +4,6 @@ export const loadingObject = {
     extension: 'jpg',
     description: 'loading',
     dateAdded: 'loading',
+    msAdded: 0,
   },
 };

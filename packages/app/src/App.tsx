@@ -22,7 +22,10 @@ const Container = styled.div`
   margin: auto;
   padding-top: 1.5rem;
   padding-bottom: 1rem;
-  width: 60%;
+  width: 1100px;
+  @media (max-width: 1100px) {
+    width: 100%;
+  }
   button {
     background-color: #424242;
     border: 1px solid black;

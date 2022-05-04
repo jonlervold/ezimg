@@ -1,4 +1,4 @@
-import { FC, SetStateAction, useState } from 'react';
+import { FC, SetStateAction, useEffect, useState } from 'react';
 import { serverUrl } from '../serverUrl';
 import { database } from '../types/Database';
 import ChangeDescription from './ChangeDescription';
@@ -9,10 +9,23 @@ type Props = {
   database: database;
   setChange: React.Dispatch<SetStateAction<string>>;
   id: string;
+  perPage: number;
+  firstImage: number;
 };
 
-const SingleFileTable: FC<Props> = ({ database, setChange, id }) => {
-  //   const [error, setError] = useState(undefined);
+const SingleFileTable: FC<Props> = ({
+  database,
+  setChange,
+  id,
+  perPage,
+  firstImage,
+}) => {
+  const [error, setError] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    setError(undefined);
+  }, [perPage, firstImage]);
+
   return (
     <>
       <img
@@ -24,6 +37,7 @@ const SingleFileTable: FC<Props> = ({ database, setChange, id }) => {
           <tr>
             <td>Added:</td>
             <td>{database[id].dateAdded}</td>
+            <td>{error}</td>
           </tr>
           <tr>
             <td>Name:</td>
@@ -34,6 +48,7 @@ const SingleFileTable: FC<Props> = ({ database, setChange, id }) => {
               filename={database[id].fileName}
               extension={database[id].extension}
               setChange={setChange}
+              setError={setError}
             />
           </tr>
           <tr>
@@ -43,6 +58,7 @@ const SingleFileTable: FC<Props> = ({ database, setChange, id }) => {
               filename={database[id].fileName}
               extension={database[id].extension}
               setChange={setChange}
+              setError={setError}
             />
           </tr>
           <tr>
@@ -55,6 +71,7 @@ const SingleFileTable: FC<Props> = ({ database, setChange, id }) => {
               filename={database[id].fileName}
               extension={database[id].extension}
               setChange={setChange}
+              setError={setError}
             />
           </tr>
         </tbody>

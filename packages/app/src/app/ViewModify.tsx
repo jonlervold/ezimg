@@ -29,6 +29,8 @@ const ViewModify: FC<Props> = ({ database, setChange }) => {
         database={database}
         fileKeys={currentKeys}
         setChange={setChange}
+        perPage={perPage}
+        firstImage={firstImage}
       />
       <Navigation
         perPage={perPage}

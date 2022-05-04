@@ -9,31 +9,29 @@ type Props = {
   filename: string;
   extension: string;
   setChange: React.Dispatch<SetStateAction<string>>;
+  setError: React.Dispatch<SetStateAction<string | undefined>>;
 };
 
-const Container = styled.div`
-  .error {
-    color: red;
-  }
-`;
-
-const RenameFile: FC<Props> = ({ filename, extension, setChange }) => {
-  const { value, setValue, error, onClick } = useRenameFile(
+const RenameFile: FC<Props> = ({
+  filename,
+  extension,
+  setChange,
+  setError,
+}) => {
+  const { value, setValue, onClick } = useRenameFile(
     filename,
     extension,
-    setChange
+    setChange,
+    setError
   );
 
   return (
     <td>
-      <Container>
-        <input
-          onChange={(e) => setValue(e.target.value)}
-          value={value.toLowerCase().replace(/[^a-z\d-]/g, '')}
-        ></input>{' '}
-        <button onClick={onClick}>Rename</button>
-        <div className="error">{error}</div>
-      </Container>
+      <input
+        onChange={(e) => setValue(e.target.value)}
+        value={value.toLowerCase().replace(/[^a-z\d-]/g, '')}
+      ></input>{' '}
+      <button onClick={onClick}>Rename</button>
     </td>
   );
 };

@@ -5,10 +5,10 @@ import renameFile from '../api/renameFile';
 const useRenameFile = (
   filename: string,
   extension: string,
-  setChange: React.Dispatch<SetStateAction<string>>
+  setChange: React.Dispatch<SetStateAction<string>>,
+  setError: React.Dispatch<SetStateAction<string | undefined>>
 ) => {
   const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string | undefined>();
   const onClick = async () => {
     setError(undefined);
     try {
@@ -24,7 +24,7 @@ const useRenameFile = (
       }
     }
   };
-  return { value, setValue, error, onClick };
+  return { value, setValue, onClick };
 };
 
 export default useRenameFile;

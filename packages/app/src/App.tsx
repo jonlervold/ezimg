@@ -9,7 +9,7 @@ import CheckLoading from './components/CheckLoading';
 
 const FillBackground = createGlobalStyle`
 body {
-  background-color: #4a3e3e;
+  background-color: #959595;
 }`;
 
 const Container = styled.div`

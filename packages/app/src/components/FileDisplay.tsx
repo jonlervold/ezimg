@@ -1,6 +1,7 @@
 import { FC, SetStateAction } from 'react';
 import { database } from '../types/Database';
 import SingleFileTable from './SingleFileTable';
+import styled from 'styled-components';
 
 type Props = {
   database: database;
@@ -10,6 +11,10 @@ type Props = {
   firstImage: number;
 };
 
+const OneFile = styled.div`
+  margin-bottom: 3rem;
+`;
+
 const FileDisplay: FC<Props> = ({
   database,
   fileKeys,
@@ -18,7 +23,7 @@ const FileDisplay: FC<Props> = ({
   firstImage,
 }) => {
   const tables = fileKeys.map((key: string, index: number) => (
-    <div key={index}>
+    <OneFile key={index}>
       <SingleFileTable
         database={database}
         setChange={setChange}
@@ -26,7 +31,7 @@ const FileDisplay: FC<Props> = ({
         perPage={perPage}
         firstImage={firstImage}
       />
-    </div>
+    </OneFile>
   ));
   return <div>{tables}</div>;
 };

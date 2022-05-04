@@ -1,7 +1,9 @@
 import { FC, SetStateAction } from 'react';
+import styled from 'styled-components';
 import getNavigationLogic from '../util/getNavigationLogic';
 import BackForward from './BackForward';
 import ShowPerPage from './ShowPerPage';
+import ContentBox from './ContentBox';
 
 type Props = {
   perPage: number;
@@ -19,15 +21,15 @@ const Navigation: FC<Props> = ({
   setFirstImage,
 }) => {
   return (
-    <div>
+    <ContentBox>
+      <ShowPerPage perPage={perPage} setPerPage={setPerPage} />
       <BackForward
         itemTotal={itemTotal}
         perPage={perPage}
         firstImage={firstImage}
         setFirstImage={setFirstImage}
       />
-      <ShowPerPage perPage={perPage} setPerPage={setPerPage} />
-    </div>
+    </ContentBox>
   );
 };
 

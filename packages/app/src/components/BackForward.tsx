@@ -1,4 +1,5 @@
 import { FC, SetStateAction } from 'react';
+import styled from 'styled-components';
 import getNavigationLogic from '../util/getNavigationLogic';
 
 type Props = {
@@ -8,6 +9,10 @@ type Props = {
   setFirstImage: React.Dispatch<SetStateAction<number>>;
 };
 
+const Container = styled.div`
+  padding: 0.6rem;
+`;
+
 const BackForward: FC<Props> = ({
   itemTotal,
   perPage,
@@ -16,7 +21,7 @@ const BackForward: FC<Props> = ({
 }) => {
   const navigationLogic = getNavigationLogic(firstImage, perPage, itemTotal);
   return (
-    <div>
+    <Container>
       <div>
         {navigationLogic.imageLine} of {itemTotal}
       </div>
@@ -34,7 +39,7 @@ const BackForward: FC<Props> = ({
           Forward
         </button>
       </div>
-    </div>
+    </Container>
   );
 };
 

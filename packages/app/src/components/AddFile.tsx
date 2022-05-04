@@ -20,6 +20,12 @@ const Container = styled.div`
   label {
     display: block;
   }
+  .subtitle {
+    font-size: 3em;
+  }
+  .fileTypes {
+    padding-bottom: 1rem;
+  }
 `;
 
 const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
@@ -51,8 +57,10 @@ const AddFile: FC<Props> = ({ value, error, onChange, onAddRequest }) => {
   return (
     <Container>
       <div className="form-row">
-        <label>Upload File</label>
-        <label>.jpg, .jpeg, .tif, .tiff, .png, .bmp, .gif</label>
+        <div className="subtitle">Upload File</div>
+        <label className="fileTypes">
+          .jpg, .jpeg, .tif, .tiff, .png, .bmp, .gif
+        </label>
         <input
           type="file"
           accept=".jpg,.jpeg,.tif,.tiff,.png,.bmp,.gif"

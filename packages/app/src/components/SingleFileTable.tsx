@@ -4,6 +4,7 @@ import { database } from '../types/Database';
 import ChangeDescription from './ChangeDescription';
 import RemoveFile from './RemoveFile';
 import RenameFile from './RenameFile';
+import styled from 'styled-components';
 
 type Props = {
   database: database;
@@ -12,6 +13,21 @@ type Props = {
   perPage: number;
   firstImage: number;
 };
+
+const Table = styled.table`
+  width: 100%;
+  border: 0.4rem solid black;
+  background-color: aliceblue;
+  margin-top: 0.5rem;
+  table-layout: fixed;
+  padding: 0.5rem;
+`;
+
+const Image = styled.div`
+  border: 0.4rem solid black;
+  background-color: aliceblue;
+  padding: 1rem;
+`;
 
 const SingleFileTable: FC<Props> = ({
   database,
@@ -28,14 +44,16 @@ const SingleFileTable: FC<Props> = ({
 
   return (
     <>
-      <img
-        src={`${serverUrl}/images/${database[id].fileName}.${database[id].extension}`}
-        alt={`${database[id].description}`}
-      ></img>
-      <table>
+      <Image>
+        <img
+          src={`${serverUrl}/images/${database[id].fileName}.${database[id].extension}`}
+          alt={`${database[id].description}`}
+        ></img>
+      </Image>
+      <Table>
         <tbody>
           <tr>
-            <td>Added:</td>
+            <td className="left">Added:</td>
             <td>{database[id].dateAdded}</td>
             <td>{error}</td>
           </tr>
@@ -75,7 +93,7 @@ const SingleFileTable: FC<Props> = ({
             />
           </tr>
         </tbody>
-      </table>
+      </Table>
     </>
   );
 };

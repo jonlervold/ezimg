@@ -14,7 +14,7 @@ const RemoveFile: FC<Props> = ({ filename, extension, setChange }) => {
   };
   return (
     <td>
-      <button onClick={() => onClick()}>
+      <button onClick={onClick}>
         Remove {filename}.{extension}
       </button>
     </td>

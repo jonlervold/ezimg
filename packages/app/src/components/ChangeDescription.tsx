@@ -17,7 +17,7 @@ const ChangeDescription: FC<Props> = ({ filename, extension, setChange }) => {
   return (
     <td>
       <input onChange={(e) => setValue(e.target.value)} value={value}></input>{' '}
-      <button onClick={() => onClick()}>Change</button>
+      <button onClick={onClick}>Change</button>
     </td>
   );
 };

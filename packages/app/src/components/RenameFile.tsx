@@ -23,7 +23,7 @@ const RenameFile: FC<Props> = ({ filename, extension, setChange }) => {
         onChange={(e) => setValue(e.target.value)}
         value={value.toLowerCase().replace(/[^a-z\d-]/g, '')}
       ></input>{' '}
-      <button onClick={() => onClick()}>Rename</button>
+      <button onClick={onClick}>Rename</button>
       <div>{error}</div>
     </td>
   );

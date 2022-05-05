@@ -1,17 +1,14 @@
 import axios from 'axios';
 
 const renameFile = async (
-  value: string,
-  filename: string,
+  id: string,
+  newFileName: string,
   extension: string
 ) => {
-  let answer = 'failure';
-  await axios
-    .put('http://localhost:3333/rename', { value, filename, extension })
-    .then((response) => {
-      answer = response.data;
-    });
-  return answer;
+  await axios.put(`http://localhost:3333/rename/${id}`, {
+    newFileName,
+    extension,
+  });
 };
 
 export default renameFile;

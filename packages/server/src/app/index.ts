@@ -15,7 +15,8 @@ const app = (app: Express) => {
   });
 
   app.get('/database', (req, res) => {
-    res.send(database.get());
+    const data = database.get();
+    res.json({ files: Object.values(data).slice(0, 1) });
   });
 };
 

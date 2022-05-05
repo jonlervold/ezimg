@@ -1,21 +1,56 @@
 import { Express } from 'express';
 import * as fs from 'fs';
-
+type FilInfo = {
+  fileName: string;
+  extension: string;
+  description: string;
+  msAdded: number;
+};
 const rename = (app: Express) => {
-  app.put('/rename', async (req, res) => {
-    const database = JSON.parse(fs.readFileSync('./data.json').toString());
+  app.put('/rename/:id', async (req, res) => {
+    const fileId = req.params.id;
+    const values = req.body as { newFileName: string; extension: string };
+    const database = JSON.parse(fs.readFileSync('./data.json').toString()) as {
+      [key: string]: FilInfo;
+    };
+    const previousValues = database[fileId];
+    const updatedDatabase = {
+      ...database,
+      [values.newFileName]: {
+        ...previousValues,
+        extension: values.extension,
+        fileName: values.newFileName,
+      },
+    };
+    const hasFileNameChanged = fileId !== values.newFileName;
+    if (hasFileNameChanged) {
+      delete updatedDatabase[fileId];
+    }
 
-    database[req.body.value] = database[req.body.filename];
-    database[req.body.value].fileName = req.body.value;
+    fs.writeFileSync('./data.json', JSON.stringify(updatedDatabase));
 
-    delete database[req.body.filename];
+    return res.sendStatus(hasFileNameChanged ? 200 : 201);
+    //
 
-    fs.writeFileSync('./data.json', JSON.stringify(database));
+    // if(database[req.body.filename]){
+    //   database[req.body.filename] = {
+    //     ...database[req.body.filename],
 
-    const oldPath = `./user_content/images/${req.body.filename}.${req.body.extension}`;
-    const newPath = `./user_content/images/${req.body.value}.${req.body.extension}`;
-    fs.renameSync(oldPath, newPath);
-    res.send(Date.now().toString());
+    //   }
+    // }else{
+    //   throw new Error("Cannot find file")
+    // }
+
+    // database[req.body.value].fileName = req.body.value;
+
+    // delete database[req.body.filename];
+
+    // fs.writeFileSync('./data.json', JSON.stringify(database));
+
+    // const oldPath = `./user_content/images/${req.body.filename}.${req.body.extension}`;
+    // const newPath = `./user_content/images/${req.body.value}.${req.body.extension}`;
+    // fs.renameSync(oldPath, newPath);
+    // res.send(Date.now().toString());
   });
 };
 

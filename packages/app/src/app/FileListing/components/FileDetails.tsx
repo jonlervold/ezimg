@@ -1,7 +1,7 @@
 import FileListingDetails, {
   FileListingDetailsUpdate,
 } from '../../../types/FileListingDetails';
-import { FC, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 
 type Props = {
   details: FileListingDetails;
@@ -9,7 +9,7 @@ type Props = {
 };
 
 const FileDetails: FC<Props> = ({ details, onSave }) => {
-  const [editModeEnabled, setEditMode] = useState(false);
+  const [editModeEnabled, setEditModeEnabled] = useState(false);
   const [detailsEdits, setDetailsEdits] = useState<
     FileListingDetailsUpdate | undefined
   >();
@@ -60,23 +60,34 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
       <div>
         {editModeEnabled ? (
           <>
-            <button
+            <span
+              role="img"
+              aria-label="Submit Changes"
               onClick={async () => {
                 await onSave(formDisplayDetails);
                 //
                 setDetailsEdits(undefined);
               }}
-              disabled={!hasUserEdits}
             >
-              Submit Changes
-            </button>
+              ✔️
+            </span>
 
-            <button onClick={() => setEditMode(false)}>Discard Changes</button>
+            <span
+              role="img"
+              aria-label="Discard Changes"
+              onClick={() => setEditModeEnabled(false)}
+            >
+              ❌
+            </span>
           </>
         ) : (
-          <button onClick={() => (setEditMode(true), setDetailsEdits(details))}>
-            Edit
-          </button>
+          <span
+            role="img"
+            aria-label="Edit"
+            onClick={() => (setEditModeEnabled(true), setDetailsEdits(details))}
+          >
+            ✏️
+          </span>
         )}
       </div>
     </>

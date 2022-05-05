@@ -1,11 +1,4 @@
-import {
-  FC,
-  ReactChild,
-  useCallback,
-  useEffect,
-  useState,
-  Fragment,
-} from 'react';
+import { FC, useCallback, useEffect, useState, Fragment } from 'react';
 import fetchFiles from '../../api/fetchFiles';
 import renameFile from '../../api/renameFile';
 import FileListingDetails, {
@@ -36,9 +29,10 @@ const FileListing: FC = () => {
     //we are using fileName as Id. But it can also change
     //So we need to get the fileName from previousFile
     const id = previousFile.fileName;
-    await renameFile(id, file.fileName, file.extension);
+    await renameFile(id, file.fileName, file.description);
     await fetch();
   };
+
   return (
     <div>
       {isLoading ? (
@@ -46,14 +40,22 @@ const FileListing: FC = () => {
       ) : (
         <div>
           {files
-            .slice(startIndex)
             .sort((a, b) => {
               if (a.msAdded > b.msAdded) return -1;
               else return 1;
             })
+            .slice(startIndex)
             .map((file) => (
               <Fragment key={file.msAdded}>
-                <Card>{file.fileName}</Card>
+                <Card>
+                  {/* <img
+                    src={`http://localhost:3333/images/${file.fileName}.${file.extension}`}
+                    alt={`${file.fileName}`}
+                  /> */}
+                  <>
+                    {file.fileName}.{file.extension}
+                  </>
+                </Card>
                 <Card>
                   <FileDetails
                     details={file}

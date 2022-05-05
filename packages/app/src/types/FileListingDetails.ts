@@ -1,11 +1,11 @@
 export type FileListingDetailsUpdate = {
   fileName: string;
-  extension: string;
   description: string;
 };
 
 type FileListingDetails = FileListingDetailsUpdate & {
   msAdded: number;
+  extension: string;
 };
 
 export default FileListingDetails;

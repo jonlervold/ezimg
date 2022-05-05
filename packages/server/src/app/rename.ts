@@ -1,6 +1,6 @@
 import { Express } from 'express';
 import * as fs from 'fs';
-type FilInfo = {
+type FileInfo = {
   fileName: string;
   extension: string;
   description: string;
@@ -9,28 +9,32 @@ type FilInfo = {
 const rename = (app: Express) => {
   app.put('/rename/:id', async (req, res) => {
     const fileId = req.params.id;
-    const values = req.body as { newFileName: string; extension: string };
+    const newFileName = req.body.newFileInfo.newFileName;
+    const newDescription = req.body.newFileInfo.newDescription;
     const database = JSON.parse(fs.readFileSync('./data.json').toString()) as {
-      [key: string]: FilInfo;
+      [key: string]: FileInfo;
     };
     const previousValues = database[fileId];
     const updatedDatabase = {
       ...database,
-      [values.newFileName]: {
+      [newFileName]: {
         ...previousValues,
-        extension: values.extension,
-        fileName: values.newFileName,
+        fileName: newFileName,
+        description: newDescription,
       },
     };
-    const hasFileNameChanged = fileId !== values.newFileName;
+    const hasFileNameChanged = fileId !== newFileName;
     if (hasFileNameChanged) {
       delete updatedDatabase[fileId];
     }
 
     fs.writeFileSync('./data.json', JSON.stringify(updatedDatabase));
 
+    const oldPath = `./user_content/images/${fileId}.${database[fileId].extension}`;
+    const newPath = `./user_content/images/${newFileName}.${database[fileId].extension}`;
+    fs.renameSync(oldPath, newPath);
+
     return res.sendStatus(hasFileNameChanged ? 200 : 201);
-    //
 
     // if(database[req.body.filename]){
     //   database[req.body.filename] = {
@@ -47,9 +51,6 @@ const rename = (app: Express) => {
 
     // fs.writeFileSync('./data.json', JSON.stringify(database));
 
-    // const oldPath = `./user_content/images/${req.body.filename}.${req.body.extension}`;
-    // const newPath = `./user_content/images/${req.body.value}.${req.body.extension}`;
-    // fs.renameSync(oldPath, newPath);
     // res.send(Date.now().toString());
   });
 };

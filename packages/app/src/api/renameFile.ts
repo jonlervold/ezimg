@@ -3,11 +3,11 @@ import axios from 'axios';
 const renameFile = async (
   id: string,
   newFileName: string,
-  extension: string
+  newDescription: string
 ) => {
+  const newFileInfo = { newFileName, newDescription };
   await axios.put(`http://localhost:3333/rename/${id}`, {
-    newFileName,
-    extension,
+    newFileInfo,
   });
 };
 

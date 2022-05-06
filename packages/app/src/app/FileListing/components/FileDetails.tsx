@@ -2,6 +2,7 @@ import CompleteFileInfo, {
   UpdatableFileInfo,
 } from '../../../types/CompleteFileInfo';
 import { FC, useState } from 'react';
+import getDateFromMs from '../../../util/getDateFromMs';
 
 type Props = {
   originalFileInfo: CompleteFileInfo;
@@ -21,10 +22,12 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave }) => {
       [key]: value,
     });
   };
+
+  const dateAdded = getDateFromMs(originalFileInfo.msAdded);
+
   return (
     <>
       <div>
-        File:{' '}
         {editModeEnabled ? (
           <input
             value={currentDisplayInfo.fileName}
@@ -38,8 +41,9 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave }) => {
         .{originalFileInfo.extension}
       </div>
 
+      <div>{dateAdded}</div>
+
       <div>
-        Description:{' '}
         {editModeEnabled ? (
           <input
             value={currentDisplayInfo.description}
@@ -52,11 +56,11 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave }) => {
         )}
       </div>
 
-      <div>Date Added: {originalFileInfo.msAdded}</div>
       <div>
-        URL: http://localhost:3333/images/{originalFileInfo.fileName}.
+        http://localhost:3333/images/{originalFileInfo.fileName}.
         {originalFileInfo.extension}
       </div>
+
       <div>
         {editModeEnabled ? (
           <>

@@ -1,23 +1,23 @@
-import FileListingDetails, {
-  FileListingDetailsUpdate,
-} from '../../../types/FileListingDetails';
+import CompleteFileInfo, {
+  UpdatableFileInfo,
+} from '../../../types/CompleteFileInfo';
 import { FC, useState } from 'react';
 
 type Props = {
-  details: FileListingDetails;
-  onSave: (value: FileListingDetailsUpdate) => Promise<void>;
+  originalFileInfo: CompleteFileInfo;
+  onSave: (value: UpdatableFileInfo) => Promise<void>;
 };
 
-const FileDetails: FC<Props> = ({ details, onSave }) => {
+const FileDetails: FC<Props> = ({ originalFileInfo, onSave }) => {
   const [editModeEnabled, setEditModeEnabled] = useState(false);
-  const [detailsEdits, setDetailsEdits] = useState<
-    FileListingDetailsUpdate | undefined
+  const [updatedFields, setUpdatedFields] = useState<
+    UpdatableFileInfo | undefined
   >();
-  const formDisplayDetails = detailsEdits ?? details;
+  const currentDisplayInfo = updatedFields ?? originalFileInfo;
 
   const onChange = (key: string, value: string) => {
-    setDetailsEdits({
-      ...formDisplayDetails,
+    setUpdatedFields({
+      ...currentDisplayInfo,
       [key]: value,
     });
   };
@@ -27,34 +27,35 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
         File:{' '}
         {editModeEnabled ? (
           <input
-            value={formDisplayDetails.fileName}
+            value={currentDisplayInfo.fileName}
             onChange={(e) => {
               onChange('fileName', e.target.value);
             }}
           />
         ) : (
-          <>{formDisplayDetails.fileName}</>
+          <>{currentDisplayInfo.fileName}</>
         )}
-        .{details.extension}
+        .{originalFileInfo.extension}
       </div>
 
       <div>
         Description:{' '}
         {editModeEnabled ? (
           <input
-            value={formDisplayDetails.description}
+            value={currentDisplayInfo.description}
             onChange={(e) => {
               onChange('description', e.target.value);
             }}
           />
         ) : (
-          <>{details.description}</>
+          <>{originalFileInfo.description}</>
         )}
       </div>
 
-      <div>Date Added: {details.msAdded}</div>
+      <div>Date Added: {originalFileInfo.msAdded}</div>
       <div>
-        URL: http://localhost:3333/images/{details.fileName}.{details.extension}
+        URL: http://localhost:3333/images/{originalFileInfo.fileName}.
+        {originalFileInfo.extension}
       </div>
       <div>
         {editModeEnabled ? (
@@ -63,9 +64,9 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
               role="img"
               aria-label="Submit Changes"
               onClick={async () => {
-                await onSave(formDisplayDetails);
+                await onSave(currentDisplayInfo);
                 //
-                setDetailsEdits(undefined);
+                setUpdatedFields(undefined);
                 setEditModeEnabled(false);
               }}
             >
@@ -84,7 +85,9 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
           <span
             role="img"
             aria-label="Edit"
-            onClick={() => (setEditModeEnabled(true), setDetailsEdits(details))}
+            onClick={() => (
+              setEditModeEnabled(true), setUpdatedFields(originalFileInfo)
+            )}
           >
             ✏️
           </span>
@@ -95,76 +98,3 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
 };
 
 export default FileDetails;
-
-// import FileListingDetails, {
-//   FileListingDetailsUpdate,
-// } from '../../../types/FileListingDetails';
-// import { FC, useState } from 'react';
-
-// type Props = {
-//   details: FileListingDetails;
-//   onSave: (value: FileListingDetailsUpdate) => Promise<void>;
-// };
-
-// const FileDetails: FC<Props> = ({
-//   details: { msAdded, extension, ...detailsForUpdate },
-//   onSave,
-// }) => {
-//   const [editMode, setEditMode] = useState(false);
-//   const [detailsEdits, setDetailsEdits] = useState<
-//     FileListingDetailsUpdate | undefined
-//   >();
-//   const hasUserEdits = !!detailsEdits;
-//   const formDisplayDetails = detailsEdits ?? detailsForUpdate;
-
-//   const onChange = (key: string, value: string) => {
-//     setDetailsEdits({
-//       ...formDisplayDetails,
-//       [key]: value,
-//     });
-//   };
-//   return (
-//     <>
-//       <div>
-//         File Name:
-//         {editMode ? (
-//           <input
-//             value={formDisplayDetails.fileName}
-//             onChange={(e) => {
-//               onChange('fileName', e.target.value);
-//             }}
-//           />
-//         ) : (
-//           'WTF'
-//         )}
-//         .{extension}
-//       </div>
-//       <div>
-//         Description :{' '}
-//         <input
-//           value={formDisplayDetails.description}
-//           onChange={(e) => {
-//             onChange('description', e.target.value);
-//           }}
-//         />
-//       </div>
-//       <div>Date Added: {msAdded}</div>
-//       <div>
-//         <button onClick={() => setEditMode(true)}>Edit</button>
-//         <button
-//           onClick={async () => {
-//             await onSave(formDisplayDetails);
-//             //
-//             setDetailsEdits(undefined);
-//           }}
-//           disabled={!hasUserEdits}
-//         >
-//           Submit Changes
-//         </button>
-//         <button>Discard Changes</button>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default FileDetails;

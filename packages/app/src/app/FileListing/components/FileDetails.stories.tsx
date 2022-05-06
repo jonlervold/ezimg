@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof FileDetails> = (args) => {
 
 export const Base = Template.bind({});
 Base.args = {
-  details: {
+  originalFileInfo: {
     fileName: 'name',
     extension: 'jpg',
     description: 'description',

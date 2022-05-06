@@ -1,16 +1,16 @@
 import { FC, useCallback, useEffect, useState, Fragment } from 'react';
 import fetchFiles from '../../api/fetchFiles';
 import updateFile from '../../api/updateFile';
-import FileListingDetails, {
-  FileListingDetailsUpdate,
-} from '../../types/FileListingDetails';
+import CompleteFileInfo, {
+  UpdatableFileInfo,
+} from '../../types/CompleteFileInfo';
 import Card from './components/Card';
 import FileDetails from './components/FileDetails';
 
 const FileListing: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [startIndex, setStartIndex] = useState(0);
-  const [files, setFiles] = useState<FileListingDetails[]>([]);
+  const [files, setFiles] = useState<CompleteFileInfo[]>([]);
 
   const fetch = useCallback(async () => {
     const { files } = await fetchFiles();
@@ -23,8 +23,8 @@ const FileListing: FC = () => {
   }, [fetch]);
 
   const handleSaveEdits = async (
-    previousFile: FileListingDetails,
-    file: FileListingDetailsUpdate
+    previousFile: CompleteFileInfo,
+    file: UpdatableFileInfo
   ) => {
     // fileName is used as id
     // to change requires fileName from previousFile
@@ -58,7 +58,7 @@ const FileListing: FC = () => {
                 </Card>
                 <Card>
                   <FileDetails
-                    details={file}
+                    originalFileInfo={file}
                     onSave={async (fileUpdate) => {
                       await handleSaveEdits(file, fileUpdate);
                     }}

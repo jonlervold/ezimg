@@ -1,5 +1,5 @@
 import axios from 'axios';
-import FileListing from '../types/FileListingDetails';
+import FileListing from '../types/CompleteFileInfo';
 
 const fetchFiles = async () => {
   const res = await axios.get<{ files: FileListing[] }>(

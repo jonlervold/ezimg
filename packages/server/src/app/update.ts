@@ -6,8 +6,8 @@ type FileInfo = {
   description: string;
   msAdded: number;
 };
-const rename = (app: Express) => {
-  app.put('/rename/:id', async (req, res) => {
+const update = (app: Express) => {
+  app.put('/update/:id', async (req, res) => {
     const fileId = req.params.id;
     const newFileName = req.body.newFileInfo.newFileName;
     const newDescription = req.body.newFileInfo.newDescription;
@@ -55,4 +55,4 @@ const rename = (app: Express) => {
   });
 };
 
-export default rename;
+export default update;

@@ -1,7 +1,7 @@
 import FileListingDetails, {
   FileListingDetailsUpdate,
 } from '../../../types/FileListingDetails';
-import { FC, Fragment, useState } from 'react';
+import { FC, useState } from 'react';
 
 type Props = {
   details: FileListingDetails;
@@ -13,7 +13,6 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
   const [detailsEdits, setDetailsEdits] = useState<
     FileListingDetailsUpdate | undefined
   >();
-  const hasUserEdits = !!detailsEdits;
   const formDisplayDetails = detailsEdits ?? details;
 
   const onChange = (key: string, value: string) => {
@@ -67,6 +66,7 @@ const FileDetails: FC<Props> = ({ details, onSave }) => {
                 await onSave(formDisplayDetails);
                 //
                 setDetailsEdits(undefined);
+                setEditModeEnabled(false);
               }}
             >
               ✔️

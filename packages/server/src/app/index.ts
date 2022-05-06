@@ -2,11 +2,10 @@ import * as database from '../services/database';
 import { Express } from 'express';
 import upload from './upload';
 import remove from './remove';
-import rename from './rename';
-import changeDescription from './changeDescription';
+import update from './update';
 
 const app = (app: Express) => {
-  const routes = [upload, remove, rename, changeDescription];
+  const routes = [upload, remove, update];
   for (const route of routes) {
     route(app);
   }

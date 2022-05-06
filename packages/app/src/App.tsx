@@ -19,10 +19,23 @@ const Container = styled.div`
 `;
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [files, setFiles] = useState<CompleteFileInfo[]>([]);
+
+  const fetch = useCallback(async () => {
+    const { files } = await fetchFiles();
+    setFiles(files);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
   return (
     <Container>
       <Uploader />
-      <FileListing />
+      <FileListing fetch={fetch} isLoading={isLoading} files={files} />
     </Container>
   );
 }

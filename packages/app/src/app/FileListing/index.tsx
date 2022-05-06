@@ -7,19 +7,25 @@ import CompleteFileInfo, {
 import Card from './components/Card';
 import FileDetails from './components/FileDetails';
 
-const FileListing: FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [files, setFiles] = useState<CompleteFileInfo[]>([]);
+type Props = {
+  fetch: () => Promise<void>;
+  isLoading: boolean;
+  files: CompleteFileInfo[];
+};
 
-  const fetch = useCallback(async () => {
-    const { files } = await fetchFiles();
-    setFiles(files);
-    setIsLoading(false);
-  }, []);
+const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [files, setFiles] = useState<CompleteFileInfo[]>([]);
 
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
+  // const fetch = useCallback(async () => {
+  //   const { files } = await fetchFiles();
+  //   setFiles(files);
+  //   setIsLoading(false);
+  // }, []);
+
+  // useEffect(() => {
+  //   fetch();
+  // }, [fetch]);
 
   const [startIndex, setStartIndex] = useState(0);
 

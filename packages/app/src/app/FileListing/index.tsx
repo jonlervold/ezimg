@@ -9,7 +9,6 @@ import FileDetails from './components/FileDetails';
 
 const FileListing: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [startIndex, setStartIndex] = useState(0);
   const [files, setFiles] = useState<CompleteFileInfo[]>([]);
 
   const fetch = useCallback(async () => {
@@ -21,6 +20,8 @@ const FileListing: FC = () => {
   useEffect(() => {
     fetch();
   }, [fetch]);
+
+  const [startIndex, setStartIndex] = useState(0);
 
   const handleSaveEdits = async (
     previousFile: CompleteFileInfo,
@@ -48,13 +49,10 @@ const FileListing: FC = () => {
             .map((file) => (
               <Fragment key={file.msAdded}>
                 <Card>
-                  {/* <img
+                  <img
                     src={`http://localhost:3333/images/${file.fileName}.${file.extension}`}
                     alt={`${file.fileName}`}
-                  /> */}
-                  <>
-                    {file.fileName}.{file.extension}
-                  </>
+                  />
                 </Card>
                 <Card>
                   <FileDetails

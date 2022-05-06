@@ -3,9 +3,13 @@ import { FC } from 'react';
 import Card from './Card';
 import getNameAndExtension from '../../../util/getNameAndExtension';
 
-const Uploader: FC = () => {
+type Props = {
+  fetch: () => Promise<void>;
+};
+
+const Uploader: FC<Props> = ({ fetch }) => {
   const { uploadInfo, errorMessage, isLoading, setUploadInfo, handleUpload } =
-    useFileUpload();
+    useFileUpload(fetch);
 
   const onTitleChange = (key: 'title', inputValue: string) => {
     setUploadInfo({

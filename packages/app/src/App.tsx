@@ -34,7 +34,7 @@ function App() {
 
   return (
     <Container>
-      <Uploader />
+      <Uploader fetch={fetch} />
       <FileListing fetch={fetch} isLoading={isLoading} files={files} />
     </Container>
   );

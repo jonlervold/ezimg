@@ -4,7 +4,7 @@ import uploadFile from '../api/uploadFile';
 import FileUpload from '../types/FileUpload';
 
 // const useFileUpload = (setChange: React.Dispatch<SetStateAction<string>>) => {
-const useFileUpload = () => {
+const useFileUpload = (fetch: () => Promise<void>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
   const [uploadInfo, setUploadInfo] = useState<FileUpload>({
@@ -34,6 +34,7 @@ const useFileUpload = () => {
         setErrorMessage(e.message);
       }
     }
+    await fetch();
     setIsLoading(false);
     setUploadInfo({
       title: '',

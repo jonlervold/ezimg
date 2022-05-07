@@ -1,21 +1,32 @@
-import { FC, useCallback, useEffect, useState, Fragment } from 'react';
+import { FC, Fragment, useCallback, useEffect, useState } from 'react';
 import fetchFiles from '../../api/fetchFiles';
 import removeFile from '../../api/removeFile';
 import updateFile from '../../api/updateFile';
+import useFileNavigation from '../../hooks/useFileNavigation';
 import CompleteFileInfo, {
   UpdatableFileInfo,
 } from '../../types/CompleteFileInfo';
 import Card from './components/Card';
 import FileDetails from './components/FileDetails';
+import Navigation from './components/Navigation';
+import Uploader from './components/Uploader';
 
-type Props = {
-  fetch: () => Promise<void>;
-  isLoading: boolean;
-  files: CompleteFileInfo[];
-};
+const FileListing: FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [files, setFiles] = useState<CompleteFileInfo[]>([]);
 
-const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
-  const [startIndex, setStartIndex] = useState(0);
+  const fetch = useCallback(async () => {
+    const { files } = await fetchFiles();
+    setFiles(files);
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
+  const { perPage, setPerPage, startIndex, setStartIndex } =
+    useFileNavigation();
 
   const handleSaveEdits = async (
     previousFile: CompleteFileInfo,
@@ -35,8 +46,19 @@ const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
 
   return (
     <div>
+      <Uploader fetch={fetch} />
+      <Card>
+        <Navigation
+          perPage={perPage}
+          setPerPage={setPerPage}
+          itemTotal={files.length}
+          startIndex={startIndex}
+          setStartIndex={setStartIndex}
+        />
+      </Card>
+
       {isLoading ? (
-        <div>Loading...</div>
+        <Card>Loading...</Card>
       ) : (
         <div>
           {files
@@ -44,7 +66,7 @@ const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
               if (a.msAdded > b.msAdded) return -1;
               else return 1;
             })
-            .slice(startIndex)
+            .slice(startIndex, startIndex + perPage)
             .map((file) => (
               <Fragment key={file.msAdded}>
                 <Card>
@@ -66,6 +88,15 @@ const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
             ))}
         </div>
       )}
+      <Card>
+        <Navigation
+          perPage={perPage}
+          setPerPage={setPerPage}
+          itemTotal={files.length}
+          startIndex={startIndex}
+          setStartIndex={setStartIndex}
+        />
+      </Card>
     </div>
   );
 };

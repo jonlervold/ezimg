@@ -68,10 +68,15 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
           <span>
             {editModeEnabled ? (
               <>
-                <span role="img" aria-label="Are You Sure?">
+                <span
+                  style={{ cursor: 'default' }}
+                  role="img"
+                  aria-label="Are You Sure?"
+                >
                   💾❔ —{' '}
                 </span>
                 <span
+                  style={{ cursor: 'pointer' }}
                   role="img"
                   aria-label="Submit Changes"
                   onClick={async () => {
@@ -85,6 +90,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
                 </span>
 
                 <span
+                  style={{ cursor: 'pointer' }}
                   role="img"
                   aria-label="Discard Changes"
                   onClick={() => setEditModeEnabled(false)}
@@ -95,6 +101,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
             ) : (
               <span
                 role="img"
+                style={{ cursor: 'pointer' }}
                 aria-label="Edit"
                 onClick={() => (
                   setEditModeEnabled(true),
@@ -112,10 +119,15 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
           <span>
             {deleteModeEnabled ? (
               <>
-                <span role="img" aria-label="Are You Sure?">
+                <span
+                  style={{ cursor: 'default' }}
+                  role="img"
+                  aria-label="Are You Sure?"
+                >
                   🗑️❔ —{' '}
                 </span>
                 <span
+                  style={{ cursor: 'pointer' }}
                   role="img"
                   aria-label="Confirm Delete"
                   onClick={async () => {
@@ -130,6 +142,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
                 </span>
 
                 <span
+                  style={{ cursor: 'pointer' }}
                   role="img"
                   aria-label="Don't Delete"
                   onClick={() => setDeleteModeEnabled(false)}
@@ -139,6 +152,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
               </>
             ) : (
               <span
+                style={{ cursor: 'pointer' }}
                 role="img"
                 aria-label="Edit"
                 onClick={() => (

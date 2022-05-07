@@ -7,10 +7,12 @@ import getDateFromMs from '../../../util/getDateFromMs';
 type Props = {
   originalFileInfo: CompleteFileInfo;
   onSave: (value: UpdatableFileInfo) => Promise<void>;
+  onDelete: (fileName: string, extension: string) => Promise<void>;
 };
 
-const FileDetails: FC<Props> = ({ originalFileInfo, onSave }) => {
+const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
   const [editModeEnabled, setEditModeEnabled] = useState(false);
+  const [deleteModeEnabled, setDeleteModeEnabled] = useState(false);
   const [updatedFields, setUpdatedFields] = useState<
     UpdatableFileInfo | undefined
   >();
@@ -62,38 +64,90 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave }) => {
       </div>
 
       <div>
-        {editModeEnabled ? (
-          <>
-            <span
-              role="img"
-              aria-label="Submit Changes"
-              onClick={async () => {
-                await onSave(currentDisplayInfo);
-                //
-                setUpdatedFields(undefined);
-                setEditModeEnabled(false);
-              }}
-            >
-              ✔️
-            </span>
+        {!deleteModeEnabled && (
+          <span>
+            {editModeEnabled ? (
+              <>
+                <span role="img" aria-label="Are You Sure?">
+                  💾❔ —{' '}
+                </span>
+                <span
+                  role="img"
+                  aria-label="Submit Changes"
+                  onClick={async () => {
+                    await onSave(currentDisplayInfo);
+                    //
+                    setUpdatedFields(undefined);
+                    setEditModeEnabled(false);
+                  }}
+                >
+                  ✔️
+                </span>
 
-            <span
-              role="img"
-              aria-label="Discard Changes"
-              onClick={() => setEditModeEnabled(false)}
-            >
-              ❌
-            </span>
-          </>
-        ) : (
-          <span
-            role="img"
-            aria-label="Edit"
-            onClick={() => (
-              setEditModeEnabled(true), setUpdatedFields(originalFileInfo)
+                <span
+                  role="img"
+                  aria-label="Discard Changes"
+                  onClick={() => setEditModeEnabled(false)}
+                >
+                  ❌
+                </span>
+              </>
+            ) : (
+              <span
+                role="img"
+                aria-label="Edit"
+                onClick={() => (
+                  setEditModeEnabled(true),
+                  setDeleteModeEnabled(false),
+                  setUpdatedFields(originalFileInfo)
+                )}
+              >
+                ✏️
+              </span>
             )}
-          >
-            ✏️
+          </span>
+        )}
+
+        {!editModeEnabled && (
+          <span>
+            {deleteModeEnabled ? (
+              <>
+                <span role="img" aria-label="Are You Sure?">
+                  🗑️❔ —{' '}
+                </span>
+                <span
+                  role="img"
+                  aria-label="Confirm Delete"
+                  onClick={async () => {
+                    await onDelete(
+                      originalFileInfo.fileName,
+                      originalFileInfo.extension
+                    );
+                    setDeleteModeEnabled(false);
+                  }}
+                >
+                  ✔️
+                </span>
+
+                <span
+                  role="img"
+                  aria-label="Don't Delete"
+                  onClick={() => setDeleteModeEnabled(false)}
+                >
+                  ❌
+                </span>
+              </>
+            ) : (
+              <span
+                role="img"
+                aria-label="Edit"
+                onClick={() => (
+                  setDeleteModeEnabled(true), setEditModeEnabled(false)
+                )}
+              >
+                🗑️
+              </span>
+            )}
           </span>
         )}
       </div>

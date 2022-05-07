@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useState, Fragment } from 'react';
 import fetchFiles from '../../api/fetchFiles';
+import removeFile from '../../api/removeFile';
 import updateFile from '../../api/updateFile';
 import CompleteFileInfo, {
   UpdatableFileInfo,
@@ -14,19 +15,6 @@ type Props = {
 };
 
 const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [files, setFiles] = useState<CompleteFileInfo[]>([]);
-
-  // const fetch = useCallback(async () => {
-  //   const { files } = await fetchFiles();
-  //   setFiles(files);
-  //   setIsLoading(false);
-  // }, []);
-
-  // useEffect(() => {
-  //   fetch();
-  // }, [fetch]);
-
   const [startIndex, setStartIndex] = useState(0);
 
   const handleSaveEdits = async (
@@ -37,6 +25,11 @@ const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
     // to change requires fileName from previousFile
     const id = previousFile.fileName;
     await updateFile(id, file.fileName, file.description);
+    await fetch();
+  };
+
+  const handleDelete = async (fileName: string, extension: string) => {
+    await removeFile(fileName, extension);
     await fetch();
   };
 
@@ -66,6 +59,7 @@ const FileListing: FC<Props> = ({ fetch, isLoading, files }) => {
                     onSave={async (fileUpdate) => {
                       await handleSaveEdits(file, fileUpdate);
                     }}
+                    onDelete={handleDelete}
                   />
                 </Card>
               </Fragment>

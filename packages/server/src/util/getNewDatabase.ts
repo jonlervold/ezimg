@@ -7,9 +7,9 @@ const getNewDatabase = (
 ) => {
   const database = JSON.parse(fs.readFileSync('./data.json').toString());
 
-  if (description === '') {
-    description = 'None';
-  }
+  // if (description === '') {
+  //   description = 'None';
+  // }
 
   const dateObject = new Date();
   const date = dateObject.getDate();

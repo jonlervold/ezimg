@@ -3,12 +3,50 @@ import CompleteFileInfo, {
 } from '../../../types/CompleteFileInfo';
 import { FC, useState } from 'react';
 import getDateFromMs from '../../../util/getDateFromMs';
+import styled from 'styled-components';
 
 type Props = {
   originalFileInfo: CompleteFileInfo;
   onSave: (value: UpdatableFileInfo) => Promise<void>;
   onDelete: (fileName: string, extension: string) => Promise<void>;
 };
+
+const DetailsText = styled.div`
+  overflow-wrap: anywhere;
+  margin: 0.75rem;
+  line-height: 1.5;
+  .filename {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+  }
+  .filename-input {
+    font-size: 2rem;
+    width: 60%;
+    text-align: center;
+  }
+
+  .url {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.25rem;
+  }
+  .url:hover {
+    background-color: #ce9ed6;
+    color: white;
+    cursor: copy;
+  }
+  .description-input {
+    text-align: center;
+  }
+  .description {
+    margin-top: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    line-height: 1;
+  }
+`;
 
 const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
   const [editModeEnabled, setEditModeEnabled] = useState(false);
@@ -28,40 +66,55 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
   const dateAdded = getDateFromMs(originalFileInfo.msAdded);
 
   return (
-    <>
-      <div>
-        {editModeEnabled ? (
-          <input
-            value={currentDisplayInfo.fileName}
-            onChange={(e) => {
-              onChange('fileName', e.target.value);
-            }}
-          />
-        ) : (
-          <>{currentDisplayInfo.fileName}</>
-        )}
-        .{originalFileInfo.extension}
-      </div>
+    <div>
+      <DetailsText>
+        <div className="filename">
+          {editModeEnabled ? (
+            <>
+              <input
+                className="filename-input"
+                maxLength={200}
+                value={currentDisplayInfo.fileName}
+                onChange={(e) => {
+                  onChange('fileName', e.target.value);
+                }}
+              />{' '}
+            </>
+          ) : (
+            <>{currentDisplayInfo.fileName}</>
+          )}
+          .{originalFileInfo.extension}
+        </div>
 
-      <div>{dateAdded}</div>
+        <div
+          className="url"
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `http://localhost:3333/images/${originalFileInfo.fileName}.${originalFileInfo.extension}`
+            );
+          }}
+        >
+          http://localhost:3333/images/{originalFileInfo.fileName}.
+          {originalFileInfo.extension}
+        </div>
 
-      <div>
-        {editModeEnabled ? (
-          <input
-            value={currentDisplayInfo.description}
-            onChange={(e) => {
-              onChange('description', e.target.value);
-            }}
-          />
-        ) : (
-          <>{originalFileInfo.description}</>
-        )}
-      </div>
+        <div>Uploaded {dateAdded}</div>
 
-      <div>
-        http://localhost:3333/images/{originalFileInfo.fileName}.
-        {originalFileInfo.extension}
-      </div>
+        <div>
+          {editModeEnabled ? (
+            <input
+              className="description-input"
+              maxLength={1000}
+              value={currentDisplayInfo.description}
+              onChange={(e) => {
+                onChange('description', e.target.value);
+              }}
+            />
+          ) : (
+            <div className="description">{originalFileInfo.description}</div>
+          )}
+        </div>
+      </DetailsText>
 
       <div>
         {!deleteModeEnabled && (
@@ -165,7 +218,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
           </span>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

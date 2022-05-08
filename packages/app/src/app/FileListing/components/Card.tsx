@@ -3,7 +3,12 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   padding: 1rem;
-  border: 2px solid gray;
+  margin: 1rem;
+  background-color: aliceblue;
+  border: 0.2rem solid black;
+  .details-card {
+    margin-top: 0.5rem;
+  }
 `;
 
 const Card: FC<{ children: ReactChild }> = ({ children }) => {

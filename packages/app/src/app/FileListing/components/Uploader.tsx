@@ -2,6 +2,7 @@ import useFileUpload from '../../../hooks/useFileUpload';
 import { FC } from 'react';
 import Card from './Card';
 import getNameAndExtension from '../../../util/getNameAndExtension';
+import styled from 'styled-components';
 
 type Props = {
   fetch: () => Promise<void>;
@@ -69,6 +70,7 @@ const Uploader: FC<Props> = ({ fetch }) => {
             onChange={(e) => onDescriptionChange('description', e.target.value)}
           />
         </div>
+        <div className="form-row">{isLoading && 'Uploading...'}</div>
         <div className="form-row">
           <button
             onClick={handleUpload}

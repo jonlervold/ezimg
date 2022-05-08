@@ -47,56 +47,66 @@ const FileListing: FC = () => {
   return (
     <div>
       <Uploader fetch={fetch} />
-      <Card>
-        <Navigation
-          perPage={perPage}
-          setPerPage={setPerPage}
-          itemTotal={files.length}
-          startIndex={startIndex}
-          setStartIndex={setStartIndex}
-        />
-      </Card>
-
       {isLoading ? (
         <Card>Loading...</Card>
       ) : (
+        // <>{(files.length) > 0 ? ("a") : ("b")}</>)}
+
         <div>
-          {files
-            .sort((a, b) => {
-              if (a.msAdded > b.msAdded) return -1;
-              else return 1;
-            })
-            .slice(startIndex, startIndex + perPage)
-            .map((file) => (
-              <Fragment key={file.msAdded}>
-                <Card>
-                  <img
-                    src={`http://localhost:3333/images/${file.fileName}.${file.extension}`}
-                    alt={`${file.fileName}`}
-                  />
-                </Card>
-                <Card>
-                  <FileDetails
-                    originalFileInfo={file}
-                    onSave={async (fileUpdate) => {
-                      await handleSaveEdits(file, fileUpdate);
-                    }}
-                    onDelete={handleDelete}
-                  />
-                </Card>
-              </Fragment>
-            ))}
+          {files.length > 0 ? (
+            <div>
+              <Card>
+                <Navigation
+                  perPage={perPage}
+                  setPerPage={setPerPage}
+                  itemTotal={files.length}
+                  startIndex={startIndex}
+                  setStartIndex={setStartIndex}
+                />
+              </Card>
+              {files
+                .sort((a, b) => {
+                  if (a.msAdded > b.msAdded) return -1;
+                  else return 1;
+                })
+                .slice(startIndex, startIndex + perPage)
+                .map((file) => (
+                  <Fragment key={file.msAdded}>
+                    <Card>
+                      <>
+                        <img
+                          src={`http://localhost:3333/images/${file.fileName}.${file.extension}`}
+                          alt={`${file.fileName}`}
+                        />
+
+                        <FileDetails
+                          originalFileInfo={file}
+                          onSave={async (fileUpdate) => {
+                            await handleSaveEdits(file, fileUpdate);
+                          }}
+                          onDelete={handleDelete}
+                        />
+                      </>
+                    </Card>
+                  </Fragment>
+                ))}
+              <Card>
+                <Navigation
+                  perPage={perPage}
+                  setPerPage={setPerPage}
+                  itemTotal={files.length}
+                  startIndex={startIndex}
+                  setStartIndex={setStartIndex}
+                />
+              </Card>
+            </div>
+          ) : (
+            <Card>
+              No files currently uploaded. Add some files to get started!
+            </Card>
+          )}
         </div>
       )}
-      <Card>
-        <Navigation
-          perPage={perPage}
-          setPerPage={setPerPage}
-          itemTotal={files.length}
-          startIndex={startIndex}
-          setStartIndex={setStartIndex}
-        />
-      </Card>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const uploader = multer({ storage: storage });
 const upload = (app: Express) => {
   app.post('/upload', uploader.single('file'), async (req, res) => {
     const fileRequest = req as unknown as {
-      file: {} | undefined;
+      file: File | undefined;
       body:
         | { title: string; extension: string; description: string }
         | undefined;

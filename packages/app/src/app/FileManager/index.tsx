@@ -1,48 +1,18 @@
-import { FC, Fragment, useCallback, useEffect, useState } from 'react';
-import fetchFiles from '../../api/fetchFiles';
-import removeFile from '../../api/removeFile';
-import updateFile from '../../api/updateFile';
+import { FC, Fragment } from 'react';
 import Card from '../../components/styles/Card';
+import useFetchRender from '../../hooks/useFetchRender';
+import useFileModify from '../../hooks/useFileModify';
 import useFileNavigation from '../../hooks/useFileNavigation';
-import CompleteFileInfo, {
-  UpdatableFileInfo,
-} from '../../types/CompleteFileInfo';
+import { serverUrl } from '../../serverUrl';
 import FileDetails from './components/FileDetails';
 import Navigation from './components/Navigation';
 import Uploader from './components/Uploader';
 
 const FileListing: FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [files, setFiles] = useState<CompleteFileInfo[]>([]);
-
-  const fetch = useCallback(async () => {
-    const { files } = await fetchFiles();
-    setFiles(files);
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
-
+  const { isLoading, files, fetch } = useFetchRender();
+  const { handleSaveEdits, handleDelete } = useFileModify(fetch);
   const { perPage, setPerPage, startIndex, setStartIndex } =
     useFileNavigation();
-
-  const handleSaveEdits = async (
-    previousFile: CompleteFileInfo,
-    file: UpdatableFileInfo
-  ) => {
-    // fileName is used as id
-    // to change requires fileName from previousFile
-    const id = previousFile.fileName;
-    await updateFile(id, file.fileName, file.description);
-    await fetch();
-  };
-
-  const handleDelete = async (fileName: string, extension: string) => {
-    await removeFile(fileName, extension);
-    await fetch();
-  };
 
   return (
     <div>
@@ -50,8 +20,6 @@ const FileListing: FC = () => {
       {isLoading ? (
         <Card>Loading...</Card>
       ) : (
-        // <>{(files.length) > 0 ? ("a") : ("b")}</>)}
-
         <div>
           {files.length > 0 ? (
             <div>
@@ -75,7 +43,7 @@ const FileListing: FC = () => {
                     <Card>
                       <>
                         <img
-                          src={`http://localhost:3333/images/${file.fileName}.${file.extension}`}
+                          src={`${serverUrl}/images/${file.fileName}.${file.extension}`}
                           alt={`${file.fileName}`}
                         />
 

@@ -1,20 +1,7 @@
-import styled from 'styled-components';
 import './App.css';
 import FileListing from './app/FileListing';
 import Card from './app/FileListing/components/Card';
-
-const Container = styled.div`
-  text-align: center;
-  margin: auto;
-  width: 1100px;
-  @media (max-width: 1100px) {
-    width: 100%;
-  }
-  img {
-    width: 100%;
-    height: auto;
-  }
-`;
+import Container from './app/FileListing/components/styles/Container';
 
 function App() {
   return (

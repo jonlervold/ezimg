@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { UpdatableFileInfo } from './../types/CompleteFileInfo';
 import CompleteFileInfo from '../types/CompleteFileInfo';
 import updateFile from '../api/updateFile';
 import removeFile from '../api/removeFile';
+import getDateFromMs from '../util/getDateFromMs';
 
-const useFileModify = (fetch: () => Promise<void>) => {
+const useFileModify = (
+  originalFileInfo: CompleteFileInfo,
+  fetch: () => Promise<void>
+) => {
   const handleSaveEdits = async (
     previousFile: CompleteFileInfo,
     file: UpdatableFileInfo
@@ -20,7 +25,34 @@ const useFileModify = (fetch: () => Promise<void>) => {
     await fetch();
   };
 
-  return { handleSaveEdits, handleDelete };
+  const [editModeEnabled, setEditModeEnabled] = useState(false);
+  const [deleteModeEnabled, setDeleteModeEnabled] = useState(false);
+  const [updatedFields, setUpdatedFields] = useState<
+    UpdatableFileInfo | undefined
+  >();
+  const currentDisplayInfo = updatedFields ?? originalFileInfo;
+
+  const onChange = (key: string, value: string) => {
+    setUpdatedFields({
+      ...currentDisplayInfo,
+      [key]: value,
+    });
+  };
+
+  const dateAdded = getDateFromMs(originalFileInfo.msAdded);
+
+  return {
+    handleSaveEdits,
+    handleDelete,
+    editModeEnabled,
+    setEditModeEnabled,
+    deleteModeEnabled,
+    setDeleteModeEnabled,
+    setUpdatedFields,
+    currentDisplayInfo,
+    onChange,
+    dateAdded,
+  };
 };
 
 export default useFileModify;

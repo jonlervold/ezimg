@@ -1,8 +1,5 @@
-import CompleteFileInfo, {
-  UpdatableFileInfo,
-} from '../../../types/CompleteFileInfo';
-import { FC, useState } from 'react';
-import getDateFromMs from '../../../util/getDateFromMs';
+import CompleteFileInfo from '../../../types/CompleteFileInfo';
+import { FC } from 'react';
 import DetailsText from './styles/DetailsText';
 import useFileModify from '../../../hooks/useFileModify';
 import { serverUrl } from '../../../serverUrl';
@@ -13,22 +10,18 @@ type Props = {
 };
 
 const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
-  const { handleSaveEdits, handleDelete } = useFileModify(fetch);
-  const [editModeEnabled, setEditModeEnabled] = useState(false);
-  const [deleteModeEnabled, setDeleteModeEnabled] = useState(false);
-  const [updatedFields, setUpdatedFields] = useState<
-    UpdatableFileInfo | undefined
-  >();
-  const currentDisplayInfo = updatedFields ?? originalFileInfo;
-
-  const onChange = (key: string, value: string) => {
-    setUpdatedFields({
-      ...currentDisplayInfo,
-      [key]: value,
-    });
-  };
-
-  const dateAdded = getDateFromMs(originalFileInfo.msAdded);
+  const {
+    handleSaveEdits,
+    handleDelete,
+    editModeEnabled,
+    setEditModeEnabled,
+    deleteModeEnabled,
+    setDeleteModeEnabled,
+    setUpdatedFields,
+    currentDisplayInfo,
+    onChange,
+    dateAdded,
+  } = useFileModify(originalFileInfo, fetch);
 
   return (
     <div>

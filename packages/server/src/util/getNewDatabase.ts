@@ -7,30 +7,6 @@ const getNewDatabase = (
 ) => {
   const database = JSON.parse(fs.readFileSync('./data.json').toString());
 
-  // if (description === '') {
-  //   description = 'None';
-  // }
-
-  const dateObject = new Date();
-  const date = dateObject.getDate();
-  const month = dateObject.getMonth() + 1;
-  const year = dateObject.getFullYear();
-
-  let hour = dateObject.getHours().toString();
-  if (hour.length < 2) {
-    hour = `0${hour}`;
-  }
-  let minute = dateObject.getMinutes().toString();
-  if (minute.length < 2) {
-    minute = `0${minute}`;
-  }
-  let second = dateObject.getSeconds().toString();
-  if (second.length < 2) {
-    second = `0${second}`;
-  }
-
-  const currentDate = `${month}/${date}/${year} @ ${hour}:${minute}:${second}`;
-
   const msAdded = Date.now();
 
   const newDatabase = {
@@ -39,7 +15,6 @@ const getNewDatabase = (
       fileName: title,
       extension: extension,
       description: description,
-      dateAdded: currentDate,
       msAdded,
     },
   };

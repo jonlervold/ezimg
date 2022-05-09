@@ -4,14 +4,15 @@ import CompleteFileInfo, {
 import { FC, useState } from 'react';
 import getDateFromMs from '../../../util/getDateFromMs';
 import DetailsText from './styles/DetailsText';
+import useFileModify from '../../../hooks/useFileModify';
 
 type Props = {
   originalFileInfo: CompleteFileInfo;
-  onSave: (value: UpdatableFileInfo) => Promise<void>;
-  onDelete: (fileName: string, extension: string) => Promise<void>;
+  fetch: () => Promise<void>;
 };
 
-const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
+const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
+  const { handleSaveEdits, handleDelete } = useFileModify(fetch);
   const [editModeEnabled, setEditModeEnabled] = useState(false);
   const [deleteModeEnabled, setDeleteModeEnabled] = useState(false);
   const [updatedFields, setUpdatedFields] = useState<
@@ -96,8 +97,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
                   role="img"
                   aria-label="Submit Changes"
                   onClick={async () => {
-                    await onSave(currentDisplayInfo);
-                    //
+                    await handleSaveEdits(originalFileInfo, currentDisplayInfo);
                     setUpdatedFields(undefined);
                     setEditModeEnabled(false);
                   }}
@@ -147,7 +147,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, onSave, onDelete }) => {
                   role="img"
                   aria-label="Confirm Delete"
                   onClick={async () => {
-                    await onDelete(
+                    await handleDelete(
                       originalFileInfo.fileName,
                       originalFileInfo.extension
                     );

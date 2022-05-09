@@ -1,7 +1,6 @@
 import { FC, Fragment } from 'react';
 import Card from '../../components/styles/Card';
 import useFetchRender from '../../hooks/useFetchRender';
-import useFileModify from '../../hooks/useFileModify';
 import useFileNavigation from '../../hooks/useFileNavigation';
 import { serverUrl } from '../../serverUrl';
 import FileDetails from './components/FileDetails';
@@ -10,7 +9,6 @@ import Uploader from './components/Uploader';
 
 const FileListing: FC = () => {
   const { isLoading, files, fetch } = useFetchRender();
-  const { handleSaveEdits, handleDelete } = useFileModify(fetch);
   const { perPage, setPerPage, startIndex, setStartIndex } =
     useFileNavigation();
 
@@ -47,13 +45,7 @@ const FileListing: FC = () => {
                           alt={`${file.fileName}`}
                         />
 
-                        <FileDetails
-                          originalFileInfo={file}
-                          onSave={async (fileUpdate) => {
-                            await handleSaveEdits(file, fileUpdate);
-                          }}
-                          onDelete={handleDelete}
-                        />
+                        <FileDetails originalFileInfo={file} fetch={fetch} />
                       </>
                     </Card>
                   </Fragment>

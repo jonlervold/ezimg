@@ -12,18 +12,11 @@ const uploadFile = async (
   formData.append('description', description);
   formData.append('file', file);
 
-  let answer = 'failure';
-
-  await axios
-    .post('http://localhost:3333/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    .then((response) => {
-      answer = response.data;
-    });
-  return answer;
+  await axios.post('http://localhost:3333/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 export default uploadFile;

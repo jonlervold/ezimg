@@ -1,9 +1,9 @@
-import { useState, SetStateAction } from 'react';
+import { useState } from 'react';
 import fetchFiles from '../api/fetchFiles';
 import uploadFile from '../api/uploadFile';
 import FileUpload from '../types/FileUpload';
+import getNameAndExtension from '../util/getNameAndExtension';
 
-// const useFileUpload = (setChange: React.Dispatch<SetStateAction<string>>) => {
 const useFileUpload = (fetch: () => Promise<void>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
@@ -22,7 +22,6 @@ const useFileUpload = (fetch: () => Promise<void>) => {
       const res = await fetchFiles();
       if (uploadInfo.title in res.files)
         throw new Error('Name already in database');
-      // answer = await uploadFile(
       await uploadFile(
         uploadInfo.title,
         uploadInfo.extension,
@@ -42,12 +41,39 @@ const useFileUpload = (fetch: () => Promise<void>) => {
       description: '',
     });
   };
+
+  const onTitleChange = (key: 'title', inputValue: string) => {
+    setUploadInfo({
+      ...uploadInfo,
+      [key]: inputValue.replace(/[^a-z\d-]/g, ''),
+    });
+  };
+  const onDescriptionChange = (key: 'description', inputValue: string) => {
+    setUploadInfo({
+      ...uploadInfo,
+      [key]: inputValue,
+    });
+  };
+  const handleFileInput = (files: FileList | null) => {
+    if (files === null) return;
+    if (files.item.length !== 1) return;
+    const file: File = files[0];
+    const filename = getNameAndExtension(file);
+    setUploadInfo({
+      ...uploadInfo,
+      title: filename.basename.replace(/[^a-z\d-]/g, ''),
+      extension: filename.extension,
+      file,
+    });
+  };
   return {
-    uploadInfo: uploadInfo,
-    errorMessage: errorMessage,
-    isLoading: isLoading,
-    setUploadInfo: setUploadInfo,
-    handleUpload: handleUpload,
+    uploadInfo,
+    errorMessage,
+    isLoading,
+    handleUpload,
+    onTitleChange,
+    onDescriptionChange,
+    handleFileInput,
   };
 };
 

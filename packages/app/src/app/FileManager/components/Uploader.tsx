@@ -1,40 +1,21 @@
 import useFileUpload from '../../../hooks/useFileUpload';
 import { FC } from 'react';
-import getNameAndExtension from '../../../util/getNameAndExtension';
-import Card from 'packages/app/src/components/styles/Card';
+import Card from '../../../components/styles/Card';
 
 type Props = {
   fetch: () => Promise<void>;
 };
 
 const Uploader: FC<Props> = ({ fetch }) => {
-  const { uploadInfo, errorMessage, isLoading, setUploadInfo, handleUpload } =
-    useFileUpload(fetch);
-
-  const onTitleChange = (key: 'title', inputValue: string) => {
-    setUploadInfo({
-      ...uploadInfo,
-      [key]: inputValue.replace(/[^a-z\d-]/g, ''),
-    });
-  };
-  const onDescriptionChange = (key: 'description', inputValue: string) => {
-    setUploadInfo({
-      ...uploadInfo,
-      [key]: inputValue,
-    });
-  };
-  const handleFileInput = (files: FileList | null) => {
-    if (files === null) return;
-    if (files.item.length !== 1) return;
-    const file: File = files[0];
-    const filename = getNameAndExtension(file);
-    setUploadInfo({
-      ...uploadInfo,
-      title: filename.basename.replace(/[^a-z\d-]/g, ''),
-      extension: filename.extension,
-      file,
-    });
-  };
+  const {
+    uploadInfo,
+    errorMessage,
+    isLoading,
+    handleUpload,
+    onTitleChange,
+    onDescriptionChange,
+    handleFileInput,
+  } = useFileUpload(fetch);
 
   return (
     <Card>

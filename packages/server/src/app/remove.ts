@@ -1,14 +1,16 @@
 import { Express } from 'express';
-import * as fs from 'fs';
+import * as database from '../services/database';
 
 const remove = (app: Express) => {
   app.delete('/remove', async (req, res) => {
-    const database = JSON.parse(fs.readFileSync('./data.json').toString());
-    delete database[req.body.filename];
-    fs.writeFileSync('./data.json', JSON.stringify(database));
+    const data = database.get();
+    delete data[req.body.filename];
+    database.update(data);
+
     const path = `./user_content/images/${req.body.filename}.${req.body.extension}`;
-    fs.unlinkSync(path);
-    res.send(Date.now().toString());
+    database.deleteFile(path);
+
+    res.send('response');
   });
 };
 

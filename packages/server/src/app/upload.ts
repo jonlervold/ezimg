@@ -1,7 +1,7 @@
 import { Express } from 'express';
 import * as multer from 'multer';
 import getNewDatabase from '../util/getNewDatabase';
-import * as fs from 'fs';
+import * as database from '../services/database';
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,12 +27,13 @@ const upload = (app: Express) => {
       return res.sendStatus(500).end();
     }
 
-    const title = fileRequest.body.title;
-    const extension = fileRequest.body.extension;
-    const description = fileRequest.body.description;
+    const newDatabase = getNewDatabase(
+      fileRequest.body.title,
+      fileRequest.body.extension,
+      fileRequest.body.description
+    );
 
-    const newDatabase = getNewDatabase(title, extension, description);
-    fs.writeFileSync('./data.json', JSON.stringify(newDatabase));
+    database.update(newDatabase);
     res.send(Date.now().toString());
     res.end();
   });

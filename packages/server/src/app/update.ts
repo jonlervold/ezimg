@@ -1,5 +1,7 @@
 import { Express } from 'express';
 import * as fs from 'fs';
+import * as database from '../services/database';
+
 type FileInfo = {
   fileName: string;
   extension: string;
@@ -11,47 +13,32 @@ const update = (app: Express) => {
     const fileId = req.params.id;
     const newFileName = req.body.newFileInfo.newFileName;
     const newDescription = req.body.newFileInfo.newDescription;
-    const database = JSON.parse(fs.readFileSync('./data.json').toString()) as {
-      [key: string]: FileInfo;
-    };
-    const previousValues = database[fileId];
-    const updatedDatabase = {
-      ...database,
+    const data = database.get();
+
+    const previousValues = data[fileId];
+
+    const updatedData = {
+      ...data,
       [newFileName]: {
         ...previousValues,
         fileName: newFileName,
         description: newDescription,
       },
     };
+
     const hasFileNameChanged = fileId !== newFileName;
     if (hasFileNameChanged) {
-      delete updatedDatabase[fileId];
+      delete updatedData[fileId];
     }
 
-    fs.writeFileSync('./data.json', JSON.stringify(updatedDatabase));
+    database.update(updatedData);
 
-    const oldPath = `./user_content/images/${fileId}.${database[fileId].extension}`;
-    const newPath = `./user_content/images/${newFileName}.${database[fileId].extension}`;
-    fs.renameSync(oldPath, newPath);
+    const oldPath = `./user_content/images/${fileId}.${data[fileId].extension}`;
+    const newPath = `./user_content/images/${newFileName}.${data[fileId].extension}`;
+
+    database.changePath(oldPath, newPath);
 
     return res.sendStatus(hasFileNameChanged ? 200 : 201);
-
-    // if(database[req.body.filename]){
-    //   database[req.body.filename] = {
-    //     ...database[req.body.filename],
-
-    //   }
-    // }else{
-    //   throw new Error("Cannot find file")
-    // }
-
-    // database[req.body.value].fileName = req.body.value;
-
-    // delete database[req.body.filename];
-
-    // fs.writeFileSync('./data.json', JSON.stringify(database));
-
-    // res.send(Date.now().toString());
   });
 };
 

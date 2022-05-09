@@ -2,11 +2,11 @@ import { FC, Fragment, useCallback, useEffect, useState } from 'react';
 import fetchFiles from '../../api/fetchFiles';
 import removeFile from '../../api/removeFile';
 import updateFile from '../../api/updateFile';
+import Card from '../../components/styles/Card';
 import useFileNavigation from '../../hooks/useFileNavigation';
 import CompleteFileInfo, {
   UpdatableFileInfo,
 } from '../../types/CompleteFileInfo';
-import Card from './components/Card';
 import FileDetails from './components/FileDetails';
 import Navigation from './components/Navigation';
 import Uploader from './components/Uploader';

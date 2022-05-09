@@ -1,7 +1,7 @@
 import './App.css';
-import FileListing from './app/FileListing';
-import Card from './app/FileListing/components/Card';
-import Container from './app/FileListing/components/styles/Container';
+import FileManager from './app/FileManager';
+import Card from './components/styles/Card';
+import Container from './components/styles/Container';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Card>
         <div className="title">ezimg</div>
       </Card>
-      <FileListing />
+      <FileManager />
     </Container>
   );
 }

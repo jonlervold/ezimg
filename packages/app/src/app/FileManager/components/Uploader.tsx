@@ -1,8 +1,7 @@
 import useFileUpload from '../../../hooks/useFileUpload';
 import { FC } from 'react';
-import Card from './Card';
 import getNameAndExtension from '../../../util/getNameAndExtension';
-import styled from 'styled-components';
+import Card from 'packages/app/src/components/styles/Card';
 
 type Props = {
   fetch: () => Promise<void>;

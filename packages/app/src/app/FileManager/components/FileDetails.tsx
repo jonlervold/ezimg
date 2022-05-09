@@ -21,6 +21,8 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
     currentDisplayInfo,
     onChange,
     dateAdded,
+    errorMessage,
+    setErrorMessage,
   } = useFileModify(originalFileInfo, fetch);
 
   return (
@@ -92,8 +94,6 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
                   aria-label="Submit Changes"
                   onClick={async () => {
                     await handleSaveEdits(originalFileInfo, currentDisplayInfo);
-                    setUpdatedFields(undefined);
-                    setEditModeEnabled(false);
                   }}
                 >
                   ✔️
@@ -103,9 +103,12 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
                   style={{ cursor: 'pointer' }}
                   role="img"
                   aria-label="Discard Changes"
-                  onClick={() => setEditModeEnabled(false)}
+                  onClick={() => (
+                    setEditModeEnabled(false),
+                    setUpdatedFields(originalFileInfo)
+                  )}
                 >
-                  ❌
+                  ✖️
                 </span>
               </>
             ) : (
@@ -114,9 +117,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
                 style={{ cursor: 'pointer' }}
                 aria-label="Edit"
                 onClick={() => (
-                  setEditModeEnabled(true),
-                  setDeleteModeEnabled(false),
-                  setUpdatedFields(originalFileInfo)
+                  setEditModeEnabled(true), setDeleteModeEnabled(false)
                 )}
               >
                 ✏️
@@ -157,7 +158,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
                   aria-label="Don't Delete"
                   onClick={() => setDeleteModeEnabled(false)}
                 >
-                  ❌
+                  ✖️
                 </span>
               </>
             ) : (
@@ -172,6 +173,22 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
                 🗑️
               </span>
             )}
+          </span>
+        )}
+      </div>
+      <div className="error">
+        {errorMessage}
+        {errorMessage !== undefined && (
+          <span>
+            {' '}
+            <span
+              style={{ cursor: 'pointer' }}
+              role="img"
+              aria-label="Close Error"
+              onClick={() => setErrorMessage(undefined)}
+            >
+              ❌
+            </span>
           </span>
         )}
       </div>

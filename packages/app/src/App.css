@@ -61,9 +61,6 @@ button {
 
   .form-row {
     padding: 0.5rem 1rem;}
-    .form-row-error {
-      color: red;
-    }
   
   label {
     display: block;
@@ -77,4 +74,7 @@ button {
   .details-text {
     padding: 1rem;
   }
-  
+  .error {
+    color: red;
+    padding-top: 0.5rem;
+  }

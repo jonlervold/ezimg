@@ -4,29 +4,17 @@ import CompleteFileInfo from '../types/CompleteFileInfo';
 import updateFile from '../api/updateFile';
 import removeFile from '../api/removeFile';
 import getDateFromMs from '../util/getDateFromMs';
+import fetchFiles from '../api/fetchFiles';
 
 const useFileModify = (
   originalFileInfo: CompleteFileInfo,
   fetch: () => Promise<void>
 ) => {
-  const handleSaveEdits = async (
-    previousFile: CompleteFileInfo,
-    file: UpdatableFileInfo
-  ) => {
-    // fileName is used as id
-    // to change requires fileName from previousFile
-    const id = previousFile.fileName;
-    await updateFile(id, file.fileName, file.description);
-    await fetch();
-  };
-
-  const handleDelete = async (fileName: string, extension: string) => {
-    await removeFile(fileName, extension);
-    await fetch();
-  };
-
   const [editModeEnabled, setEditModeEnabled] = useState(false);
   const [deleteModeEnabled, setDeleteModeEnabled] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
   const [updatedFields, setUpdatedFields] = useState<
     UpdatableFileInfo | undefined
   >();
@@ -41,6 +29,41 @@ const useFileModify = (
 
   const dateAdded = getDateFromMs(originalFileInfo.msAdded);
 
+  const handleSaveEdits = async (
+    previousFile: CompleteFileInfo,
+    file: UpdatableFileInfo
+  ) => {
+    try {
+      setErrorMessage(undefined);
+      const data = await fetchFiles();
+
+      for (const storedFile of data.files) {
+        // prevents overwrite unless the timestamp matches, meaning it is the same file
+        if (
+          file.fileName === storedFile.fileName &&
+          previousFile.msAdded !== storedFile.msAdded
+        ) {
+          throw new Error(`"${file.fileName}" already used as filename`);
+        }
+      }
+
+      const id = previousFile.fileName;
+      await updateFile(id, file.fileName, file.description);
+      await fetch();
+      setUpdatedFields(undefined);
+      setEditModeEnabled(false);
+    } catch (e) {
+      if (e instanceof Error) {
+        setErrorMessage(e.message);
+      }
+    }
+  };
+
+  const handleDelete = async (fileName: string, extension: string) => {
+    await removeFile(fileName, extension);
+    await fetch();
+  };
+
   return {
     handleSaveEdits,
     handleDelete,
@@ -52,6 +75,8 @@ const useFileModify = (
     currentDisplayInfo,
     onChange,
     dateAdded,
+    errorMessage,
+    setErrorMessage,
   };
 };
 

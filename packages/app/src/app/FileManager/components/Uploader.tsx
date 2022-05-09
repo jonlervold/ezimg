@@ -10,6 +10,7 @@ const Uploader: FC<Props> = ({ fetch }) => {
   const {
     uploadInfo,
     errorMessage,
+    setErrorMessage,
     isLoading,
     handleUpload,
     onTitleChange,
@@ -58,7 +59,23 @@ const Uploader: FC<Props> = ({ fetch }) => {
           >
             Add File
           </button>
-          {errorMessage && <p className="form-row-error">{errorMessage}</p>}
+
+          <div className="error">
+            {errorMessage}
+            {errorMessage !== undefined && (
+              <span>
+                {' '}
+                <span
+                  style={{ cursor: 'pointer' }}
+                  role="img"
+                  aria-label="Close Error"
+                  onClick={() => setErrorMessage(undefined)}
+                >
+                  ❌
+                </span>
+              </span>
+            )}
+          </div>
         </div>
       </>
     </Card>

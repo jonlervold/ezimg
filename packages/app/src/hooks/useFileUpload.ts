@@ -19,15 +19,26 @@ const useFileUpload = (fetch: () => Promise<void>) => {
     try {
       if (!uploadInfo.file) throw new Error('File is required');
       if (uploadInfo.title === '') throw new Error('Name cannot be blank');
-      const res = await fetchFiles();
-      if (uploadInfo.title in res.files)
-        throw new Error('Name already in database');
+
+      const data = await fetchFiles();
+
+      for (const file of data.files) {
+        if (uploadInfo.title === file.fileName) {
+          throw new Error(`"${uploadInfo.title}" already used as filename`);
+        }
+      }
+
       await uploadFile(
         uploadInfo.title,
         uploadInfo.extension,
         uploadInfo.description,
         uploadInfo.file
       );
+      setUploadInfo({
+        title: '',
+        extension: '',
+        description: '',
+      });
     } catch (e) {
       if (e instanceof Error) {
         setErrorMessage(e.message);
@@ -35,11 +46,6 @@ const useFileUpload = (fetch: () => Promise<void>) => {
     }
     await fetch();
     setIsLoading(false);
-    setUploadInfo({
-      title: '',
-      extension: '',
-      description: '',
-    });
   };
 
   const onTitleChange = (key: 'title', inputValue: string) => {
@@ -69,6 +75,7 @@ const useFileUpload = (fetch: () => Promise<void>) => {
   return {
     uploadInfo,
     errorMessage,
+    setErrorMessage,
     isLoading,
     handleUpload,
     onTitleChange,

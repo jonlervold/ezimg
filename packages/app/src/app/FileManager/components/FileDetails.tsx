@@ -5,6 +5,7 @@ import { FC, useState } from 'react';
 import getDateFromMs from '../../../util/getDateFromMs';
 import DetailsText from './styles/DetailsText';
 import useFileModify from '../../../hooks/useFileModify';
+import { serverUrl } from '../../../serverUrl';
 
 type Props = {
   originalFileInfo: CompleteFileInfo;
@@ -54,11 +55,11 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
           className="url"
           onClick={() => {
             navigator.clipboard.writeText(
-              `http://localhost:3333/images/${originalFileInfo.fileName}.${originalFileInfo.extension}`
+              `${serverUrl}/images/${originalFileInfo.fileName}.${originalFileInfo.extension}`
             );
           }}
         >
-          http://localhost:3333/images/{originalFileInfo.fileName}.
+          {serverUrl}/images/{originalFileInfo.fileName}.
           {originalFileInfo.extension}
         </div>
 

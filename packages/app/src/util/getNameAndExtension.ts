@@ -2,9 +2,9 @@ const getNameAndExtension = (file: File) => {
   const filename = file.name;
 
   const lastInstanceOfPeriod = filename.lastIndexOf('.');
-  const basename = filename.slice(0, lastInstanceOfPeriod).toLowerCase();
+  const basename = filename.slice(0, lastInstanceOfPeriod);
 
-  const extension = filename.slice(lastInstanceOfPeriod + 1).toLowerCase();
+  const extension = filename.slice(lastInstanceOfPeriod + 1);
 
   const fileInfo = { basename: basename, extension: extension };
 

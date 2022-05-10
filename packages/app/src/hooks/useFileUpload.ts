@@ -7,6 +7,7 @@ import getNameAndExtension from '../util/getNameAndExtension';
 const useFileUpload = (fetch: () => Promise<void>) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
+  const [chosenFile, setChosenFile] = useState<string>('None Selected');
   const [uploadInfo, setUploadInfo] = useState<FileUpload>({
     title: '',
     extension: '',
@@ -65,10 +66,11 @@ const useFileUpload = (fetch: () => Promise<void>) => {
     if (files.item.length !== 1) return;
     const file: File = files[0];
     const filename = getNameAndExtension(file);
+    setChosenFile(`${filename.basename}.${filename.extension}`);
     setUploadInfo({
       ...uploadInfo,
-      title: filename.basename.replace(/[^a-z\d-]/g, ''),
-      extension: filename.extension,
+      title: filename.basename.toLowerCase().replace(/[^a-z\d-]/g, ''),
+      extension: filename.extension.toLowerCase(),
       file,
     });
   };
@@ -81,6 +83,7 @@ const useFileUpload = (fetch: () => Promise<void>) => {
     onTitleChange,
     onDescriptionChange,
     handleFileInput,
+    chosenFile,
   };
 };
 

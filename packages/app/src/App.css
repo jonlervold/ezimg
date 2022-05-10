@@ -54,6 +54,33 @@ button {
     background-color: #a4a4a4;
   }
 
+  input[type="file"] {
+    position: absolute; 
+    left: -99999rem;
+}
+
+.custom-file-input {
+  background-color: #424242;
+  border: 1px solid black;
+  color: white;
+  padding: 0.2rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;}
+  .custom-file-input:hover {
+    background-color: #814b8c;
+  }
+  .custom-file-input:active {
+    background-color: #a12353;
+  }
+  .custom-file-input:disabled {
+    background-color: #a4a4a4;
+  }
+
+
   .title {
     font-size: 4em;
     padding-bottom: 0.5rem;
@@ -78,3 +105,4 @@ button {
     color: red;
     padding-top: 0.5rem;
   }
+

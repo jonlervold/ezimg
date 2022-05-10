@@ -16,6 +16,7 @@ const Uploader: FC<Props> = ({ fetch }) => {
     onTitleChange,
     onDescriptionChange,
     handleFileInput,
+    chosenFile,
   } = useFileUpload(fetch);
 
   return (
@@ -26,11 +27,20 @@ const Uploader: FC<Props> = ({ fetch }) => {
           <label className="fileTypes">
             .jpg, .jpeg, .tif, .tiff, .png, .bmp, .gif
           </label>
-          <input
+          {/* <input
             type="file"
             accept=".jpg,.jpeg,.tif,.tiff,.png,.bmp,.gif"
             onChange={(e) => handleFileInput(e.target.files)}
-          />
+          /> */}
+          <label className="custom-file-input">
+            Select File
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.tif,.tiff,.png,.bmp,.gif"
+              onChange={(e) => handleFileInput(e.target.files)}
+            />
+          </label>
+          <div>{chosenFile}</div>
         </div>
         <div className="form-row">
           <label>Name</label>

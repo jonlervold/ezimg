@@ -51,7 +51,8 @@ const Uploader: FC<Props> = ({ fetch }) => {
         </div>
         <div className="form-row">
           <label>Description</label>
-          <textarea
+          <input
+            type="text"
             value={uploadInfo.description}
             onChange={(e) => onDescriptionChange('description', e.target.value)}
           />

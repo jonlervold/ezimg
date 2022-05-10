@@ -23,6 +23,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
     dateAdded,
     errorMessage,
     setErrorMessage,
+    isLoading,
   } = useFileModify(originalFileInfo, fetch);
 
   return (
@@ -192,6 +193,7 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
           </span>
         )}
       </div>
+      <div>{isLoading && 'Applying Changes...'}</div>
     </div>
   );
 };

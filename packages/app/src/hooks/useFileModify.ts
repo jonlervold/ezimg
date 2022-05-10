@@ -12,6 +12,7 @@ const useFileModify = (
 ) => {
   const [editModeEnabled, setEditModeEnabled] = useState(false);
   const [deleteModeEnabled, setDeleteModeEnabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
@@ -34,6 +35,7 @@ const useFileModify = (
     file: UpdatableFileInfo
   ) => {
     try {
+      setIsLoading(true);
       setErrorMessage(undefined);
       const data = await fetchFiles();
 
@@ -43,6 +45,7 @@ const useFileModify = (
           file.fileName === storedFile.fileName &&
           previousFile.msAdded !== storedFile.msAdded
         ) {
+          setIsLoading(false);
           throw new Error(`"${file.fileName}" already used as filename`);
         }
       }
@@ -51,6 +54,7 @@ const useFileModify = (
       await updateFile(id, file.fileName, file.description);
       await fetch();
       setUpdatedFields(undefined);
+      setIsLoading(false);
       setEditModeEnabled(false);
     } catch (e) {
       if (e instanceof Error) {
@@ -60,8 +64,10 @@ const useFileModify = (
   };
 
   const handleDelete = async (fileName: string, extension: string) => {
+    setIsLoading(true);
     await removeFile(fileName, extension);
     await fetch();
+    setIsLoading(false);
   };
 
   return {
@@ -77,6 +83,7 @@ const useFileModify = (
     dateAdded,
     errorMessage,
     setErrorMessage,
+    isLoading,
   };
 };
 

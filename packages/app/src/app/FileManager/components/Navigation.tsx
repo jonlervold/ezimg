@@ -19,12 +19,14 @@ const Navigation: FC<Props> = ({
   const navigationLogic = getNavigationLogic(startIndex, perPage, itemTotal);
   return (
     <div>
-      <div>Show Per Page: {perPage}</div>
-      <div>
-        <button onClick={() => setPerPage(1)}>1</button>
-        <button onClick={() => setPerPage(5)}>5</button>
-        <button onClick={() => setPerPage(10)}>10</button>
-        <button onClick={() => setPerPage(20)}>20</button>
+      <div className="show-per-page">
+        <div>Show Per Page: {perPage}</div>
+        <div>
+          <button onClick={() => setPerPage(1)}>1</button>
+          <button onClick={() => setPerPage(5)}>5</button>
+          <button onClick={() => setPerPage(10)}>10</button>
+          <button onClick={() => setPerPage(20)}>20</button>
+        </div>
       </div>
       <div>
         {navigationLogic.imageLine} of {itemTotal}

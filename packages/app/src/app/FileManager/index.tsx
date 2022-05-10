@@ -8,9 +8,15 @@ import Navigation from './components/Navigation';
 import Uploader from './components/Uploader';
 
 const FileListing: FC = () => {
-  const { isLoading, files, fetch } = useFetchRender();
+  const { isLoading, files, fetch, errorMessage } = useFetchRender();
   const { perPage, setPerPage, startIndex, setStartIndex } =
     useFileNavigation();
+
+  // let noFilesDisplay =
+  //   'No files currently uploaded. Add some files to get started!';
+  // if (errorMessage !== undefined) {
+  //   noFilesDisplay = errorMessage;
+  // }
 
   return (
     <div>
@@ -60,9 +66,13 @@ const FileListing: FC = () => {
                 />
               </Card>
             </div>
-          ) : (
+          ) : errorMessage === undefined ? (
             <Card>
               No files currently uploaded. Add some files to get started!
+            </Card>
+          ) : (
+            <Card>
+              <div className="error">{errorMessage}</div>
             </Card>
           )}
         </div>

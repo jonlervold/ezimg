@@ -35,6 +35,7 @@ const useFileUpload = (fetch: () => Promise<void>) => {
         uploadInfo.description,
         uploadInfo.file
       );
+
       setUploadInfo({
         title: '',
         extension: '',

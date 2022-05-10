@@ -15,11 +15,3 @@ function App() {
 }
 
 export default App;
-
-// what should go where with styled? move this style to app.css
-
-// error handling
-
-// loadings...
-
-// file upload button thing

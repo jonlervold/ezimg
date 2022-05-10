@@ -27,11 +27,6 @@ const Uploader: FC<Props> = ({ fetch }) => {
           <label className="fileTypes">
             .jpg, .jpeg, .tif, .tiff, .png, .bmp, .gif
           </label>
-          {/* <input
-            type="file"
-            accept=".jpg,.jpeg,.tif,.tiff,.png,.bmp,.gif"
-            onChange={(e) => handleFileInput(e.target.files)}
-          /> */}
           <label className="custom-file-input">
             Select File
             <input

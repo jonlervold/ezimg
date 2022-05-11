@@ -58,6 +58,7 @@ const useFileModify = (
       setEditModeEnabled(false);
     } catch (e) {
       if (e instanceof Error) {
+        setIsLoading(false);
         setErrorMessage(e.message);
       }
     }
@@ -65,9 +66,18 @@ const useFileModify = (
 
   const handleDelete = async (fileName: string, extension: string) => {
     setIsLoading(true);
-    await removeFile(fileName, extension);
-    await fetch();
-    setIsLoading(false);
+    setErrorMessage(undefined);
+    try {
+      await removeFile(fileName, extension);
+      await fetch();
+      setIsLoading(false);
+      setDeleteModeEnabled(false);
+    } catch (e) {
+      if (e instanceof Error) {
+        setIsLoading(false);
+        setErrorMessage(e.message);
+      }
+    }
   };
 
   return {

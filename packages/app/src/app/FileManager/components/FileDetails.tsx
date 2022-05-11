@@ -147,7 +147,6 @@ const FileDetails: FC<Props> = ({ originalFileInfo, fetch }) => {
                       originalFileInfo.fileName,
                       originalFileInfo.extension
                     );
-                    setDeleteModeEnabled(false);
                   }}
                 >
                   ✔️

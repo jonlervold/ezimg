@@ -12,12 +12,6 @@ const FileListing: FC = () => {
   const { perPage, setPerPage, startIndex, setStartIndex } =
     useFileNavigation();
 
-  // let noFilesDisplay =
-  //   'No files currently uploaded. Add some files to get started!';
-  // if (errorMessage !== undefined) {
-  //   noFilesDisplay = errorMessage;
-  // }
-
   return (
     <div>
       <Uploader fetch={fetch} />
